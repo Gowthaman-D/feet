@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transaction History - Smart Expense Tracker</title>
+  <!-- Font Awesome Icons via CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Shared Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="top-navbar">
+    <nav class="navbar-content">
+      <a href="dashboard.html" class="brand-logo">
+        <div class="brand-icon-wrapper">
+          <i class="fa-solid fa-vault"></i>
+        </div>
+        <span>SmartVault <small style="font-size: 0.65em; font-weight: 500; color: var(--primary-light); display: block; margin-top: -4px;">FINANCIAL TRACKER</small></span>
+      </a>
+
+      <ul class="nav-links">
+        <li>
+          <a href="dashboard.html" class="nav-link">
+            <i class="fa-solid fa-chart-pie"></i> Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="add.html" class="nav-link">
+            <i class="fa-solid fa-circle-plus"></i> Add Transaction
+          </a>
+        </li>
+        <li>
+          <a href="history.html" class="nav-link active">
+            <i class="fa-solid fa-clock-rotate-left"></i> History
+          </a>
+        </li>
+        <li>
+          <a href="login.html" class="nav-link logout-btn">
+            <i class="fa-solid fa-power-off"></i> Logout
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Content Area -->
+  <div class="app-container">
+    <main class="content-area">
+
+      <!-- Section Header with Filter Preview Bar -->
+      <section class="section-header">
+        <div class="section-title">
+          <i class="fa-solid fa-list-check"></i>
+          <div>
+            <h2>Complete Transaction Ledger</h2>
+            <p style="font-size: 0.9rem; color: var(--text-muted); font-weight: 400; margin-top: 4px;">
+              Showing all recorded cash inflows and outflows for fiscal month July 2026.
+            </p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+          <a href="add.html" class="btn btn-primary">
+            <i class="fa-solid fa-plus"></i> Add New Transaction
+          </a>
+          <a href="dashboard.html" class="btn btn-secondary">
+            <i class="fa-solid fa-download"></i> Export CSV
+          </a>
+        </div>
+      </section>
+
+      <!-- Ledger Summary Stats -->
+      <section style="display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap;">
+        <div style="background: var(--bg-card); padding: 12px 20px; border-radius: var(--radius-full); border: 1px solid var(--border-color); font-size: 0.875rem; display: flex; align-items: center; gap: 8px;">
+          <span style="width: 10px; height: 10px; border-radius: 50%; background-color: var(--primary-blue);"></span>
+          <strong>Total Records:</strong> 12 Transactions
+        </div>
+        <div style="background: var(--income-bg); color: var(--income-color); padding: 12px 20px; border-radius: var(--radius-full); border: 1px solid var(--income-border); font-size: 0.875rem; display: flex; align-items: center; gap: 8px;">
+          <i class="fa-solid fa-circle-arrow-up"></i>
+          <strong>Monthly Income:</strong> $18,200.00
+        </div>
+        <div style="background: var(--expense-bg); color: var(--expense-color); padding: 12px 20px; border-radius: var(--radius-full); border: 1px solid var(--expense-border); font-size: 0.875rem; display: flex; align-items: center; gap: 8px;">
+          <i class="fa-solid fa-circle-arrow-down"></i>
+          <strong>Monthly Outflow:</strong> -$5,749.20
+        </div>
+      </section>
+
+      <!-- 12 Sample Transactions Table -->
+      <section class="table-container">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Category</th>
+              <th>Description</th>
+              <th>Type</th>
+              <th style="text-align: right;">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            <!-- Transaction 1 -->
+            <tr>
+              <td class="cell-date">
+                <i class="fa-regular fa-calendar" style="color: var(--text-light); margin-right: 6px;"></i>
+                July 27, 2026
+              </td>
+              <td>
+                <div class="cell-category">
+                  <div class="category-icon" style="color: #0891b2; background-color: #ecfeff;">
+                    <i class="fa-solid fa-mug-hot"></i>
+                  </div>
+                  <span>Dining & Coffee</span>
+                </div>
+              </td>
+              <td class="cell-desc">Starbucks Reserve - Morning Espresso & Client Meeting Breakfast</td>
+              <td>
+                <span class="type-badge badge-expense">
+                  <i class="fa-solid fa-arrow-down-long"></i> Expense
+                </span>
+              </td>
+              <td class="cell-amount amount-expense">-$28.50</td>
+            </tr>
+
+            <!-- Transaction 2 -->
+            <tr>
+              <td class="cell-date">
+                <i class="fa-regular fa-calendar" style="color: var(--text-light); margin-right: 6px;"></i>
+                July 26, 2026
+              </td>
+              <td>
+                <div class="cell-category">
+                  <div class="category-icon" style="color: #059669; background-color: #ecfdf5;">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                  </div>
+                  <span>Groceries & Pantry</span>
+                </div>
+              </td>
+              <td class="cell-desc">Whole Foods Market - Organic Produce & Household Supplies</td>
+              <td>
+                <span class="type-badge badge-expense">
+                  <i class="fa-solid fa-arrow-down-long"></i> Expense
+                </span>
+              </td>
+              <td class="cell-amount amount-expense">-$145.20</td>
+            </tr>
+
+            <!-- Transaction 3 -->
+            <tr>
+              <td class="cell-date">
+                <i class="fa-regular fa-calendar" style="color: var(--text-light); margin-right: 6px;"></i>
+                July 25, 2026
+              </td>
+              <td>
+                <div class="cell-category">
+                  <div class="category-icon" style="color: #2563eb; background-color: #eff6ff;">
+                    <i class="fa-solid fa-briefcase"></i>
+                  </div>
+                  <span>Salary & Compensation</span>
+                </div>
+              </td>
+              <td class="cell-desc">Apple Tech Inc. - Monthly Engineering Salary Deposit (Net)</td>
+              <td>
+                <span class="type-badge badge-income">
+                  <i class="fa-solid fa-arrow-up-long"></i> Income
+                </span>
+              </td>
+              <td class="cell-amount amount-income">+$5,400.00</td>
+            </tr>
+
+            <!-- Transaction 4 -->
+            <tr>
+              <td class="cell-date">
+                <i class="fa-regular fa-calendar" style="color: var(--text-light); margin-right: 6px;"></i>
+                July 24, 2026
+              </td>
+              <td>
+                <div class="cell-category">
+                  <div class="category-icon" style="color: #4f46e5; background-color: #eef2ff;">
+                    <i class="fa-solid fa-house-chimney"></i>
+                  </div>
+                  <span>Housing & Rent</span>
+                </div>
+              </td>
+              <td class="cell-desc">Metropolitan Luxury Apartments - August Residential Lease & Parking</td>
+              <td>
+                <span class="type-badge badge-expense">
+                  <i class="fa-solid fa-arrow-down-long"></i> Expense
+                </span>
+              </td>
+              <td class="cell-amount amount-expense">-$2,650.00</td>
+            </tr>
+
+            <!-- Transaction 5 -->
+            <tr>
+              <td class="cell-date">
+                <i class="fa-regular fa-calendar" style="color: var(--text-light); margin-right: 6px;"></i>
+                July 23, 2026
+              </td>
+              <td>
+                <div class="cell-category">
+                  <div class="category-icon" style="color: #7c3aed; background-color: #f5f3ff;">
+                    <i class="fa-solid fa-server"></i>
+                  </div>
+                  <span>Cloud & Software</span>
+                </div>
+              </td>
+              <td class="cell-desc">AWS Cloud Hosting - Production Server & DB Infrastructure</td>
+              <td>
+                <span class="type-badge badge-expense">
+                  <i class="fa-solid fa-arrow-down-long"></i> Expense
+                </span>
+              </td>
+              <td class="cell-amount amount-expense">-$89.50</td>
+            </tr>
+
+            <!-- Transaction 6 -->
+            <tr>
+              <td class="cell-date">
+                <i class="fa-regular fa-calendar" style="color: var(--text-light); margin-right: 6px;"></i>
+                July 21, 2026
+              </td>
+              <td>
+                <div class="cell-category">
+                  <div class="category-icon" style="color: #db2777; background-color: #fdf2f8;">
+                    <i class="fa-solid fa-car-side"></i>
+                  </div>
+                  <span>Transportation</span>
+                </div>
+              </td>
+              <td class="cell-desc">Uber Black Service - Airport Transit to Downtown Financial District</td>
+              <td>
+                <span class="type-badge badge-expense">
+                  <i class="fa-solid fa-arrow-down-long"></i> Expense
+                </span>
+              </td>
+              <td class="cell-amount amount-expense">-$64.00</td>
+            </tr>
+
+            <!-- Transaction 7 -->
+            <tr>
+              <td class="cell-date">
+                <i class="fa-regular fa-calendar" style="color: var(--text-light); margin-right: 6px;"></i>
+                July 20, 2026
+              </td>
+              <td>
+                <div class="cell-category">
+                  <div class="category-icon" style="color: #0d9488; background-color: #f0fdfa;">
+                    <i class="fa-solid fa-laptop-code"></i>
+                  </div>
+                  <span>Freelance Consulting</span>
+                </div>
+              </td>
+              <td class="cell-desc">Global Fintech Client - UI/UX Design System Retainer Milestone</td>
+              <td>
+                <span class="type-badge badge-income">
+                  <i class="fa-solid fa-arrow-up-long"></i> Income
+                </span>
+              </td>
+              <td class="cell-amount amount-income">+$1,850.00</td>
+            </tr>
+
+            <!-- Transaction 8 -->
+            <tr>
+              <td class="cell-date">
+                <i class="fa-regular fa-calendar" style="color: var(--text-light); margin-right: 6px;"></i>
+                July 18, 2026
+              </td>
+              <td>
+                <div class="cell-category">
+                  <div class="category-icon" style="color: #ea580c; background-color: #fff7ed;">
+                    <i class="fa-solid fa-bolt"></i>
+                  </div>
+                  <span>Home & Utilities</span>
+                </div>
+              </td>
+              <td class="cell-desc">Shell Energy Service - Monthly Electricity & High-Speed Fiber Internet</td>
+              <td>
+                <span class="type-badge badge-expense">
+                  <i class="fa-solid fa-arrow-down-long"></i> Expense
+                </span>
+              </td>
+              <td class="cell-amount amount-expense">-$124.80</td>
+            </tr>
+
+            <!-- Transaction 9 -->
+            <tr>
+              <td class="cell-date">
+                <i class="fa-regular fa-calendar" style="color: var(--text-light); margin-right: 6px;"></i>
+                July 15, 2026
+              </td>
+              <td>
+                <div class="cell-category">
+                  <div class="category-icon" style="color: #16a34a; background-color: #dcfce7;">
+                    <i class="fa-solid fa-chart-line"></i>
+                  </div>
+                  <span>Investments</span>
+                </div>
+              </td>
+              <td class="cell-desc">Vanguard ETF Index - Q3 Dividend Payout (S&P 500 Portfolio)</td>
+              <td>
+                <span class="type-badge badge-income">
+                  <i class="fa-solid fa-arrow-up-long"></i> Income
+                </span>
+              </td>
+              <td class="cell-amount amount-income">+$10,950.00</td>
+            </tr>
+
+            <!-- Transaction 10 -->
+            <tr>
+              <td class="cell-date">
+                <i class="fa-regular fa-calendar" style="color: var(--text-light); margin-right: 6px;"></i>
+                July 12, 2026
+              </td>
+              <td>
+                <div class="cell-category">
+                  <div class="category-icon" style="color: #e11d48; background-color: #ffe4e6;">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                  </div>
+                  <span>Healthcare</span>
+                </div>
+              </td>
+              <td class="cell-desc">Dr. Chen Dental Clinic - Annual Dental Checkup & Hygiene Scaling</td>
+              <td>
+                <span class="type-badge badge-expense">
+                  <i class="fa-solid fa-arrow-down-long"></i> Expense
+                </span>
+              </td>
+              <td class="cell-amount amount-expense">-$210.00</td>
+            </tr>
+
+            <!-- Transaction 11 -->
+            <tr>
+              <td class="cell-date">
+                <i class="fa-regular fa-calendar" style="color: var(--text-light); margin-right: 6px;"></i>
+                July 08, 2026
+              </td>
+              <td>
+                <div class="cell-category">
+                  <div class="category-icon" style="color: #9333ea; background-color: #faf5ff;">
+                    <i class="fa-solid fa-gift"></i>
+                  </div>
+                  <span>Shopping & Retail</span>
+                </div>
+              </td>
+              <td class="cell-desc">Nordstrom Flagship Store - Executive Business Attire & Shoes</td>
+              <td>
+                <span class="type-badge badge-expense">
+                  <i class="fa-solid fa-arrow-down-long"></i> Expense
+                </span>
+              </td>
+              <td class="cell-amount amount-expense">-$2,387.20</td>
+            </tr>
+
+            <!-- Transaction 12 -->
+            <tr>
+              <td class="cell-date">
+                <i class="fa-regular fa-calendar" style="color: var(--text-light); margin-right: 6px;"></i>
+                July 03, 2026
+              </td>
+              <td>
+                <div class="cell-category">
+                  <div class="category-icon" style="color: #475569; background-color: #f1f5f9;">
+                    <i class="fa-solid fa-film"></i>
+                  </div>
+                  <span>Subscriptions</span>
+                </div>
+              </td>
+              <td class="cell-desc">Apple Music & Netflix - Annual 4K UHD Ultra Streaming Plan</td>
+              <td>
+                <span class="type-badge badge-expense">
+                  <i class="fa-solid fa-arrow-down-long"></i> Expense
+                </span>
+              </td>
+              <td class="cell-amount amount-expense">-$50.00</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="app-container">
+      <div class="footer-content">
+        <p>&copy; 2026 Smart Expense Tracker. Static HTML5 & CSS3 Architecture.</p>
+        <div class="footer-links">
+          <a href="dashboard.html">Privacy Policy</a>
+          <a href="dashboard.html">Terms of Service</a>
+          <a href="dashboard.html">Security Center</a>
+          <a href="dashboard.html">Support</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
