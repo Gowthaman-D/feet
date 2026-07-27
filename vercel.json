@@ -1,0 +1,10 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/expense-tracker/login.html" },
+    { "source": "/login.html", "destination": "/expense-tracker/login.html" },
+    { "source": "/dashboard.html", "destination": "/expense-tracker/dashboard.html" },
+    { "source": "/add.html", "destination": "/expense-tracker/add.html" },
+    { "source": "/history.html", "destination": "/expense-tracker/history.html" },
+    { "source": "/style.css", "destination": "/expense-tracker/style.css" }
+  ]
+}
