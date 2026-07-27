@@ -33,11 +33,10 @@
             id="email" 
             name="email" 
             class="form-control" 
-            placeholder="alex.morgan@finance.com" 
+            placeholder="Enter your email" 
             required 
             autocomplete="email" 
-            value="alex.morgan@finance.com"
-          >
+                     >
           <span class="form-helper-text">We'll never share your financial details with anyone else.</span>
         </div>
       </div>
@@ -54,10 +53,12 @@
             class="form-control" 
             placeholder="••••••••••••" 
             required 
-            minlength="6"
-            value="supersecretpassword"
+            minlength="8" 
+            maxlength="20" 
+            pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,20}" 
+            title="Password must be 8-20 characters and include uppercase, lowercase, a number, and a special character."
           >
-          <span class="form-helper-text">Must be at least 6 characters with secure encryption.</span>
+          <span class="form-helper-text">Must be 8-20 chars with uppercase, lowercase, number & special character.</span>
         </div>
       </div>
 

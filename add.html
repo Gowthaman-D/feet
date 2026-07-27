@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Transaction - Smart Expense Tracker</title>
+  <!-- Font Awesome Icons via CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Shared Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="top-navbar">
+    <nav class="navbar-content">
+      <a href="dashboard.html" class="brand-logo">
+        <div class="brand-icon-wrapper">
+          <i class="fa-solid fa-vault"></i>
+        </div>
+        <span>SmartVault <small style="font-size: 0.65em; font-weight: 500; color: var(--primary-light); display: block; margin-top: -4px;">FINANCIAL TRACKER</small></span>
+      </a>
+
+      <ul class="nav-links">
+        <li>
+          <a href="dashboard.html" class="nav-link">
+            <i class="fa-solid fa-chart-pie"></i> Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="add.html" class="nav-link active">
+            <i class="fa-solid fa-circle-plus"></i> Add Transaction
+          </a>
+        </li>
+        <li>
+          <a href="history.html" class="nav-link">
+            <i class="fa-solid fa-clock-rotate-left"></i> History
+          </a>
+        </li>
+        <li>
+          <a href="login.html" class="nav-link logout-btn">
+            <i class="fa-solid fa-power-off"></i> Logout
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Main Content Area -->
+  <div class="app-container">
+    <main class="content-area">
+
+      <!-- Section Header -->
+      <section class="section-header" style="max-width: 680px; margin: 0 auto 24px auto;">
+        <div class="section-title">
+          <i class="fa-solid fa-file-invoice-dollar"></i>
+          <div>
+            <h2>Record New Transaction</h2>
+            <p style="font-size: 0.9rem; color: var(--text-muted); font-weight: 400; margin-top: 4px;">
+              Enter the financial details below. Form fields use HTML5 native validation.
+            </p>
+          </div>
+        </div>
+        <a href="dashboard.html" class="btn btn-secondary">
+          <i class="fa-solid fa-xmark"></i> Cancel
+        </a>
+      </section>
+
+      <!-- Add Transaction Form Card -->
+      <section class="form-card">
+        
+        <form action="dashboard.html" method="get">
+          
+          <!-- Type Selection: Income vs Expense -->
+          <div class="form-group">
+            <label class="form-label">
+              Transaction Type <span class="required">*</span>
+            </label>
+            <div class="type-selector">
+              
+              <div class="type-option">
+                <input type="radio" id="type-expense" name="transaction_type" value="expense" checked required>
+                <label for="type-expense" class="type-label">
+                  <i class="fa-solid fa-circle-arrow-down"></i>
+                  <span>Expense (Outflow)</span>
+                </label>
+              </div>
+
+              <div class="type-option">
+                <input type="radio" id="type-income" name="transaction_type" value="income" required>
+                <label for="type-income" class="type-label">
+                  <i class="fa-solid fa-circle-arrow-up"></i>
+                  <span>Income (Inflow)</span>
+                </label>
+              </div>
+
+            </div>
+            <span class="form-helper-text">Select whether this transaction is outgoing spend or incoming revenue.</span>
+          </div>
+
+          <!-- Amount Input -->
+          <div class="form-group">
+            <label for="amount" class="form-label">
+              Amount ($ USD) <span class="required">*</span>
+            </label>
+            <div style="position: relative;">
+              <span style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-weight: 700; color: var(--text-muted);">$</span>
+              <input 
+                type="number" 
+                id="amount" 
+                name="amount" 
+                class="form-control" 
+                style="padding-left: 36px; font-weight: 600; font-size: 1.1rem;" 
+                placeholder="0.00" 
+                step="0.01" 
+                min="0.01" 
+                required
+              >
+            </div>
+            <span class="form-helper-text">Enter exact amount in USD (e.g. 145.20).</span>
+          </div>
+
+          <!-- Category Dropdown -->
+          <div class="form-group">
+            <label for="category" class="form-label">
+              Category <span class="required">*</span>
+            </label>
+            <select id="category" name="category" class="form-control" required style="cursor: pointer;">
+              <option value="" disabled selected>-- Choose Category --</option>
+              <optgroup label="Expense Categories">
+                <option value="groceries">🛒 Groceries & Pantry</option>
+                <option value="housing">🏠 Housing, Rent & Mortgage</option>
+                <option value="utilities">⚡ Utilities & Electricity</option>
+                <option value="dining">🍽️ Dining & Restaurants</option>
+                <option value="software">💻 Cloud & Software Subscriptions</option>
+                <option value="transportation">🚗 Transportation & Fuel</option>
+                <option value="healthcare">🩺 Healthcare & Pharmacy</option>
+                <option value="shopping">🛍️ Retail & Personal Shopping</option>
+                <option value="entertainment">🎬 Entertainment & Leisure</option>
+              </optgroup>
+              <optgroup label="Income Categories">
+                <option value="salary">💼 Salary & Compensation</option>
+                <option value="freelance">💻 Freelance & Consulting</option>
+                <option value="investments">📈 Dividends & Investments</option>
+                <option value="refunds">🔄 Refunds & Reimbursements</option>
+                <option value="other_income">🎁 Gifts & Other Inflow</option>
+              </optgroup>
+            </select>
+            <span class="form-helper-text">Categorizing helps generate your monthly spending reports.</span>
+          </div>
+
+          <!-- Date Input -->
+          <div class="form-group">
+            <label for="date" class="form-label">
+              Transaction Date <span class="required">*</span>
+            </label>
+            <input 
+              type="date" 
+              id="date" 
+              name="date" 
+              class="form-control" 
+              value="2026-07-27" 
+              required
+            >
+            <span class="form-helper-text">Select the date when this transaction occurred.</span>
+          </div>
+
+          <!-- Description Input -->
+          <div class="form-group">
+            <label for="description" class="form-label">
+              Description & Notes <span class="required">*</span>
+            </label>
+            <input 
+              type="text" 
+              id="description" 
+              name="description" 
+              class="form-control" 
+              placeholder="e.g. Whole Foods Market - Weekly Grocery Supplies" 
+              required 
+              minlength="3"
+            >
+            <span class="form-helper-text">Provide a concise summary of the transaction for your history audit.</span>
+          </div>
+
+          <!-- Form Actions -->
+          <div class="form-actions">
+            <a href="dashboard.html" class="btn btn-secondary">
+              <i class="fa-solid fa-ban"></i> Cancel
+            </a>
+            <button type="submit" class="btn btn-primary">
+              <i class="fa-solid fa-check-circle"></i> Save Transaction
+            </button>
+          </div>
+
+        </form>
+
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="app-container">
+      <div class="footer-content">
+        <p>&copy; 2026 Smart Expense Tracker. Static HTML5 & CSS3 Architecture.</p>
+        <div class="footer-links">
+          <a href="dashboard.html">Privacy Policy</a>
+          <a href="dashboard.html">Terms of Service</a>
+          <a href="dashboard.html">Security Center</a>
+          <a href="dashboard.html">Support</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
