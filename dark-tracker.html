@@ -124,7 +124,7 @@
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <i data-lucide="mail" class="h-5 w-5 text-slate-500"></i>
                         </div>
-                        <input type="email" id="email" required class="glass-input w-full pl-10 pr-4 py-2.5 rounded-lg transition-all" placeholder="name@example.com" value="user@nextrack.io">
+                        <input type="email" id="email" required class="glass-input w-full pl-10 pr-4 py-2.5 rounded-lg transition-all" placeholder="name@example.com">
                     </div>
                 </div>
                 
@@ -134,7 +134,7 @@
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <i data-lucide="lock" class="h-5 w-5 text-slate-500"></i>
                         </div>
-                        <input type="password" id="password" required class="glass-input w-full pl-10 pr-4 py-2.5 rounded-lg transition-all" placeholder="••••••••" value="password123">
+                        <input type="password" id="password" required class="glass-input w-full pl-10 pr-4 py-2.5 rounded-lg transition-all" placeholder="••••••••">
                     </div>
                 </div>
 
@@ -142,10 +142,6 @@
                     Access Dashboard
                 </button>
             </form>
-            
-            <div class="mt-6 text-center text-sm text-slate-400">
-                <p>Test credentials are pre-filled.</p>
-            </div>
         </div>
     </div>
 
@@ -359,20 +355,6 @@
 
             // --- State Management ---
             let expenses = JSON.parse(localStorage.getItem('nextrack_expenses')) || [];
-            
-            // Generate some sample data if completely empty on first load to look good out-of-the-box
-            if (expenses.length === 0 && !localStorage.getItem('nextrack_initialized')) {
-                const today = new Date();
-                expenses = [
-                    { id: '1', amount: 45.20, category: 'Food & Dining', desc: 'Uber Eats - Dinner', date: today.toISOString().split('T')[0] },
-                    { id: '2', amount: 120.00, category: 'Utilities', desc: 'Electric Bill', date: new Date(today.setDate(today.getDate()-2)).toISOString().split('T')[0] },
-                    { id: '3', amount: 14.99, category: 'Entertainment', desc: 'Netflix Subscription', date: new Date(today.setDate(today.getDate()-5)).toISOString().split('T')[0] },
-                    { id: '4', amount: 56.75, category: 'Transportation', desc: 'Gas Station', date: new Date(today.setDate(today.getDate()-1)).toISOString().split('T')[0] },
-                    { id: '5', amount: 210.00, category: 'Shopping', desc: 'Amazon Prime Order', date: new Date(today.setDate(today.getDate()-3)).toISOString().split('T')[0] },
-                ];
-                saveData();
-                localStorage.setItem('nextrack_initialized', 'true');
-            }
 
             // --- DOM Elements ---
             // Views
