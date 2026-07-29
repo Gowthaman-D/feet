@@ -1,19 +1,33 @@
+<!-- The document type declaration tells the browser this is an HTML5 document. -->
 <!DOCTYPE html>
+<!-- The html tag is the root element of the HTML page. lang="en" specifies English as the language. -->
 <html lang="en">
+<!-- The head section contains meta-information, page title, and CSS links. -->
 <head>
+  <!-- Character encoding, UTF-8 supports almost all characters. -->
   <meta charset="UTF-8">
+  <!-- Viewport meta tag ensures the site scales correctly on mobile devices. -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Title of the page shown in the browser tab. -->
   <title>Transaction History - Smart Expense Tracker</title>
+  
   <!-- Font Awesome Icons via CDN -->
+  <!-- Loads the Font Awesome library so we can use vector icons (like the vault, plus, calendar). -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <!-- Shared Stylesheet -->
+  <!-- Loads our custom CSS styles that control the layout, colors, and typography. -->
   <link rel="stylesheet" href="style.css">
 </head>
+<!-- The body contains all the content the user sees on the screen. -->
 <body>
 
   <!-- Top Navigation Bar -->
+  <!-- The header tag defines the top branding and navigation area. -->
   <header class="top-navbar">
+    <!-- The nav tag groups the navigation elements together. -->
     <nav class="navbar-content">
+      <!-- The brand logo and name, acting as a link to the dashboard. -->
       <a href="dashboard.html" class="brand-logo">
         <div class="brand-icon-wrapper">
           <i class="fa-solid fa-vault"></i>
@@ -21,6 +35,7 @@
         <span>SmartVault <small style="font-size: 0.65em; font-weight: 500; color: var(--primary-light); display: block; margin-top: -4px;">FINANCIAL TRACKER</small></span>
       </a>
 
+      <!-- An unordered list (ul) grouping the main navigation links. -->
       <ul class="nav-links">
         <li>
           <a href="dashboard.html" class="nav-link">
@@ -32,6 +47,7 @@
             <i class="fa-solid fa-circle-plus"></i> Add Transaction
           </a>
         </li>
+        <!-- This link has the 'active' class, highlighting it to show we are on the History page. -->
         <li>
           <a href="history.html" class="nav-link active">
             <i class="fa-solid fa-clock-rotate-left"></i> History
@@ -47,20 +63,25 @@
   </header>
 
   <!-- Main Content Area -->
+  <!-- A wrapper div used to horizontally center content and apply maximum widths. -->
   <div class="app-container">
+    <!-- The main tag represents the dominant content of the body. -->
     <main class="content-area">
 
       <!-- Section Header with Filter Preview Bar -->
+      <!-- A section tag grouping the header title and top-level action buttons. -->
       <section class="section-header">
         <div class="section-title">
           <i class="fa-solid fa-list-check"></i>
           <div>
             <h2>Complete Transaction Ledger</h2>
+            <!-- Subtitle giving context about what data is being shown. -->
             <p style="font-size: 0.9rem; color: var(--text-muted); font-weight: 400; margin-top: 4px;">
               Showing all recorded cash inflows and outflows for fiscal month July 2026.
             </p>
           </div>
         </div>
+        <!-- Container for action buttons, using Flexbox to align them horizontally. -->
         <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
           <a href="add.html" class="btn btn-primary">
             <i class="fa-solid fa-plus"></i> Add New Transaction
@@ -72,15 +93,19 @@
       </section>
 
       <!-- Ledger Summary Stats -->
+      <!-- A row of small informational cards summarizing the data in the table. -->
       <section style="display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap;">
+        <!-- Card showing total number of records -->
         <div style="background: var(--bg-card); padding: 12px 20px; border-radius: var(--radius-full); border: 1px solid var(--border-color); font-size: 0.875rem; display: flex; align-items: center; gap: 8px;">
           <span style="width: 10px; height: 10px; border-radius: 50%; background-color: var(--primary-blue);"></span>
           <strong>Total Records:</strong> 12 Transactions
         </div>
+        <!-- Card showing total monthly income (in green) -->
         <div style="background: var(--income-bg); color: var(--income-color); padding: 12px 20px; border-radius: var(--radius-full); border: 1px solid var(--income-border); font-size: 0.875rem; display: flex; align-items: center; gap: 8px;">
           <i class="fa-solid fa-circle-arrow-up"></i>
           <strong>Monthly Income:</strong> $18,200.00
         </div>
+        <!-- Card showing total monthly outflow/expense (in red) -->
         <div style="background: var(--expense-bg); color: var(--expense-color); padding: 12px 20px; border-radius: var(--radius-full); border: 1px solid var(--expense-border); font-size: 0.875rem; display: flex; align-items: center; gap: 8px;">
           <i class="fa-solid fa-circle-arrow-down"></i>
           <strong>Monthly Outflow:</strong> -$5,749.20
@@ -88,25 +113,34 @@
       </section>
 
       <!-- 12 Sample Transactions Table -->
+      <!-- A container for the table, useful for applying scrolling on smaller screens. -->
       <section class="table-container">
+        <!-- The HTML table element is used to display tabular data. -->
         <table class="data-table">
+          <!-- The table head (thead) groups the header rows. -->
           <thead>
+            <!-- A table row (tr) containing header cells (th). -->
             <tr>
               <th>Date</th>
               <th>Category</th>
               <th>Description</th>
               <th>Type</th>
+              <!-- Inline style to right-align the amount column header. -->
               <th style="text-align: right;">Amount</th>
             </tr>
           </thead>
+          <!-- The table body (tbody) groups the main data rows. -->
           <tbody>
             
-            <!-- Transaction 1 -->
+            <!-- Transaction 1: An Expense Example -->
+            <!-- A single table row representing one transaction. -->
             <tr>
+              <!-- Table data cell (td) for Date -->
               <td class="cell-date">
                 <i class="fa-regular fa-calendar" style="color: var(--text-light); margin-right: 6px;"></i>
                 July 27, 2026
               </td>
+              <!-- Table data cell for Category, including a colored icon block. -->
               <td>
                 <div class="cell-category">
                   <div class="category-icon" style="color: #0891b2; background-color: #ecfeff;">
@@ -115,12 +149,15 @@
                   <span>Dining & Coffee</span>
                 </div>
               </td>
+              <!-- Table data cell for the textual Description. -->
               <td class="cell-desc">Starbucks Reserve - Morning Espresso & Client Meeting Breakfast</td>
+              <!-- Table data cell for the transaction Type badge. -->
               <td>
                 <span class="type-badge badge-expense">
                   <i class="fa-solid fa-arrow-down-long"></i> Expense
                 </span>
               </td>
+              <!-- Table data cell for the Amount, styled red for expense. -->
               <td class="cell-amount amount-expense">-$28.50</td>
             </tr>
 
@@ -147,7 +184,7 @@
               <td class="cell-amount amount-expense">-$145.20</td>
             </tr>
 
-            <!-- Transaction 3 -->
+            <!-- Transaction 3: An Income Example -->
             <tr>
               <td class="cell-date">
                 <i class="fa-regular fa-calendar" style="color: var(--text-light); margin-right: 6px;"></i>
@@ -162,11 +199,13 @@
                 </div>
               </td>
               <td class="cell-desc">Apple Tech Inc. - Monthly Engineering Salary Deposit (Net)</td>
+              <!-- This badge is styled differently (green) to represent Income. -->
               <td>
                 <span class="type-badge badge-income">
                   <i class="fa-solid fa-arrow-up-long"></i> Income
                 </span>
               </td>
+              <!-- Amount is positive and colored green. -->
               <td class="cell-amount amount-income">+$5,400.00</td>
             </tr>
 
@@ -385,10 +424,13 @@
   </div>
 
   <!-- Footer -->
+  <!-- The footer section, typically containing copyright info and sub-links. -->
   <footer class="app-footer">
     <div class="app-container">
       <div class="footer-content">
+        <!-- Text for copyright -->
         <p>&copy; 2026 Smart Expense Tracker. Static HTML5 & CSS3 Architecture.</p>
+        <!-- Footer specific navigation links -->
         <div class="footer-links">
           <a href="dashboard.html">Privacy Policy</a>
           <a href="dashboard.html">Terms of Service</a>

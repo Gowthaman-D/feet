@@ -3,11 +3,20 @@
    Modern, Professional Banking UI Design System
    ========================================================================== */
 
+/* 
+   @import is used to bring in external fonts from Google Fonts.
+   We are importing 'Inter' for body text and 'Poppins' for headings to give a modern look.
+*/
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;600;700&display=swap');
 
 /* --- 1. CSS Design Tokens & Variables --- */
+/* 
+   :root represents the highest level in the document (the html tag).
+   Variables defined here start with -- and can be reused throughout the CSS.
+   This makes it easy to change a color globally just by changing it in one place.
+*/
 :root {
-  /* Color Palette - Premium Banking White & Blue */
+  /* Core Color Palette - Whites, Blues, and Dark Blues for a banking feel */
   --primary-midnight: #0f172a;
   --primary-navy: #1e3a8a;
   --primary-blue: #2563eb;
@@ -15,13 +24,13 @@
   --primary-soft: #eff6ff;
   --primary-hover: #1d4ed8;
 
-  /* Accent & Gradients */
+  /* Gradient Backgrounds - Mixing multiple colors for buttons, cards, or accents */
   --grad-primary: linear-gradient(135deg, #1e3a8a 0%, #2563eb 50%, #3b82f6 100%);
   --grad-balance: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
   --grad-income: linear-gradient(135deg, #065f46 0%, #10b981 100%);
   --grad-expense: linear-gradient(135deg, #991b1b 0%, #ef4444 100%);
 
-  /* Status Colors */
+  /* Status Colors used for Income (Green) and Expense (Red) */
   --income-color: #059669;
   --income-bg: #ecfdf5;
   --income-border: #a7f3d0;
@@ -29,18 +38,18 @@
   --expense-bg: #fef2f2;
   --expense-border: #fecaca;
 
-  /* Neutrals & Backgrounds */
-  --bg-app: #f1f5f9;
-  --bg-card: #ffffff;
+  /* Neutral tones for backgrounds, text, and borders */
+  --bg-app: #f1f5f9; /* Light grey background for the whole page */
+  --bg-card: #ffffff; /* White background for cards */
   --bg-subtle: #f8fafc;
-  --text-main: #0f172a;
+  --text-main: #0f172a; /* Darkest text */
   --text-secondary: #475569;
   --text-muted: #64748b;
-  --text-light: #94a3b8;
+  --text-light: #94a3b8; /* Lightest text */
   --border-color: #e2e8f0;
   --border-focus: #3b82f6;
 
-  /* Shadows & Elevation */
+  /* Shadows for adding depth/elevation to elements (cards, buttons, nav) */
   --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.05);
   --shadow-sm: 0 2px 4px rgba(15, 23, 42, 0.06);
   --shadow-md: 0 6px 12px -2px rgba(15, 23, 42, 0.08), 0 3px 6px -3px rgba(15, 23, 42, 0.04);
@@ -48,109 +57,129 @@
   --shadow-xl: 0 20px 32px -6px rgba(15, 23, 42, 0.12), 0 8px 16px -4px rgba(15, 23, 42, 0.06);
   --shadow-glow: 0 0 20px rgba(37, 99, 235, 0.25);
 
-  /* Layout & Geometry */
+  /* Border Radii for rounded corners */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
   --radius-xl: 24px;
-  --radius-full: 9999px;
+  --radius-full: 9999px; /* Pill-shaped corners */
+  
+  /* Max width of the main container to keep things from stretching too wide on big screens */
   --max-width: 1240px;
 
-  /* Transitions */
+  /* Transition speeds for hover effects and animations */
   --transition-fast: 0.15s ease;
   --transition-smooth: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-bounce: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* --- 2. Base Reset & Typography --- */
+/* 
+   The universal selector (*) applies to all elements. 
+   box-sizing: border-box ensures padding and borders are included in the element's total width/height.
+   Removing margin and padding ensures consistent styling across all browsers.
+*/
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+/* HTML base rules */
 html {
-  scroll-behavior: smooth;
-  font-size: 16px;
+  scroll-behavior: smooth; /* Makes clicking anchor links scroll smoothly instead of jumping instantly */
+  font-size: 16px; /* Base font size that 1rem will equal to */
 }
 
+/* Body rules act as the default for the entire page */
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background-color: var(--bg-app);
   color: var(--text-main);
   line-height: 1.6;
-  min-height: 100vh;
+  min-height: 100vh; /* Ensures the body always fills the screen vertically */
   display: flex;
-  flex-direction: column;
-  -webkit-font-smoothing: antialiased;
+  flex-direction: column; /* Stacks header, main, and footer vertically */
+  -webkit-font-smoothing: antialiased; /* Makes text look sharper on Mac */
   -moz-osx-font-smoothing: grayscale;
+  
+  /* A very subtle animated background using radial gradients */
   background-image: 
     radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.07) 0px, transparent 50%),
     radial-gradient(at 100% 0%, rgba(30, 58, 138, 0.05) 0px, transparent 50%),
     radial-gradient(at 50% 100%, rgba(14, 165, 233, 0.05) 0px, transparent 50%);
-  background-attachment: fixed;
+  background-attachment: fixed; /* Keeps background still while scrolling */
 }
 
+/* Styling all Headings (h1 through h6) */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Poppins', sans-serif;
   color: var(--primary-midnight);
   font-weight: 700;
   line-height: 1.25;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.02em; /* Slightly pulls characters closer together for a sleek look */
 }
 
+/* Links (anchor tags) */
 a {
   color: var(--primary-blue);
-  text-decoration: none;
-  transition: color var(--transition-fast);
+  text-decoration: none; /* Removes the default underline */
+  transition: color var(--transition-fast); /* Animates color change when hovered */
 }
 
+/* What happens when you hover your mouse over a link */
 a:hover {
   color: var(--primary-hover);
 }
 
+/* Removes bullet points from unordered lists */
 ul {
   list-style: none;
 }
 
 /* --- 3. Layout Utilities & Containers --- */
+/* The main wrapper that centers content and gives it a max width */
 .app-container {
   max-width: var(--max-width);
   width: 100%;
-  margin: 0 auto;
-  padding: 0 24px;
-  flex: 1;
+  margin: 0 auto; /* Auto margin on left and right centers the div */
+  padding: 0 24px; /* Adds space on the sides on smaller screens */
+  flex: 1; /* Tells this container to take up all available vertical space in the flexbody */
   display: flex;
   flex-direction: column;
 }
 
+/* The actual white space area below the header where content goes */
 main.content-area {
   padding: 32px 0 64px 0;
-  flex: 1;
+  flex: 1; /* Also expands to push footer to the bottom */
 }
 
 /* --- 4. Navigation Bar (Glassmorphism Banking Header) --- */
+/* The top bar that stays fixed at the top of the screen */
 .top-navbar {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.85); /* Semi-transparent white */
+  backdrop-filter: blur(16px); /* Applies the blur effect behind the navbar (glassmorphism) */
   -webkit-backdrop-filter: blur(16px);
   border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-  position: sticky;
+  position: sticky; /* Makes it stick to the top as you scroll down */
   top: 0;
-  z-index: 100;
+  z-index: 100; /* Ensures it sits on top of other content */
   box-shadow: var(--shadow-sm);
   transition: box-shadow var(--transition-smooth);
 }
 
+/* Inner content of the navbar, constraining width */
 .navbar-content {
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 16px 24px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-between; /* Puts logo on far left, links on far right */
 }
 
+/* The logo section (icon + text) */
 .brand-logo {
   display: flex;
   align-items: center;
@@ -162,6 +191,7 @@ main.content-area {
   letter-spacing: -0.03em;
 }
 
+/* The colored box containing the vault icon */
 .brand-icon-wrapper {
   width: 40px;
   height: 40px;
@@ -176,22 +206,25 @@ main.content-area {
   transition: transform var(--transition-bounce);
 }
 
+/* When hovering over the whole logo, just the icon box rotates and scales up slightly */
 .brand-logo:hover .brand-icon-wrapper {
   transform: rotate(-8deg) scale(1.08);
 }
 
+/* The list of links in the navbar */
 .nav-links {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 8px; /* Space between each link */
 }
 
+/* Individual links in the nav */
 .nav-link {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 10px 18px;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-full); /* Pill shape */
   font-weight: 600;
   font-size: 0.925rem;
   color: var(--text-secondary);
@@ -199,27 +232,32 @@ main.content-area {
   position: relative;
 }
 
+/* The icon inside the nav link */
 .nav-link i {
   font-size: 1rem;
   transition: transform var(--transition-fast);
 }
 
+/* Hover state for nav links */
 .nav-link:hover {
   color: var(--primary-blue);
   background-color: var(--primary-soft);
-  transform: translateY(-1px);
+  transform: translateY(-1px); /* Moves up slightly */
 }
 
+/* Enlarges the icon inside the link when the link is hovered */
 .nav-link:hover i {
   transform: scale(1.15);
 }
 
+/* The 'active' class is applied to the page we are currently on to highlight it */
 .nav-link.active {
   color: #ffffff;
   background: var(--grad-primary);
   box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
 }
 
+/* Specific styling for the logout button to make it look distinct (red) */
 .nav-link.logout-btn {
   margin-left: 12px;
   color: var(--expense-color);
@@ -227,6 +265,7 @@ main.content-area {
   border: 1px solid var(--expense-border);
 }
 
+/* Hover state for logout button */
 .nav-link.logout-btn:hover {
   background-color: #fef2f2;
   color: #b91c1c;
@@ -234,15 +273,17 @@ main.content-area {
 }
 
 /* --- 5. Dashboard Hero & Welcome Section --- */
+/* The header area of the dashboard displaying the greeting and date */
 .welcome-header {
   margin-bottom: 32px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
+  flex-wrap: wrap; /* Allows the date badge to wrap to the next line on small screens */
   gap: 16px;
 }
 
+/* Welcome headline */
 .welcome-text h1 {
   font-size: 2rem;
   margin-bottom: 6px;
@@ -251,12 +292,14 @@ main.content-area {
   gap: 10px;
 }
 
+/* Welcome subtext */
 .welcome-text p {
   color: var(--text-muted);
   font-size: 1.05rem;
   font-weight: 400;
 }
 
+/* The pill-shaped badge showing the current date */
 .date-badge {
   background-color: var(--bg-card);
   padding: 8px 16px;
@@ -276,13 +319,17 @@ main.content-area {
 }
 
 /* --- 6. Summary Cards Section --- */
+/* The grid container that holds the 3 summary cards */
 .summary-grid {
   display: grid;
+  /* Auto-fit creates columns based on available width. minmax(320px, 1fr) means 
+     each column must be at least 320px wide, and stretches (1fr) if more space is available */
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 24px;
   margin-bottom: 40px;
 }
 
+/* Base styles for the individual summary cards */
 .summary-card {
   background: var(--bg-card);
   border-radius: var(--radius-xl);
@@ -290,15 +337,17 @@ main.content-area {
   box-shadow: var(--shadow-md);
   border: 1px solid rgba(226, 232, 240, 0.8);
   position: relative;
-  overflow: hidden;
+  overflow: hidden; /* Ensures child elements (like the top color bar) don't bleed out of rounded corners */
   transition: all var(--transition-smooth);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
+/* The decorative colored bar at the very top edge of each card.
+   Created using the ::before pseudo-element. */
 .summary-card::before {
-  content: '';
+  content: ''; /* Required for pseudo-elements to render */
   position: absolute;
   top: 0;
   left: 0;
@@ -308,27 +357,31 @@ main.content-area {
   transition: height var(--transition-smooth);
 }
 
+/* Hover effect on the entire card */
 .summary-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-6px); /* Lifts the card up slightly */
   box-shadow: var(--shadow-xl);
   border-color: rgba(59, 130, 246, 0.3);
 }
 
+/* Expands the top color bar when hovering the card */
 .summary-card:hover::before {
   height: 8px;
 }
 
-/* Card Specific Themes */
+/* Specific theme for the Total Balance card (dark gradient background) */
 .summary-card.balance-card {
   background: var(--grad-balance);
   color: white;
   border: none;
 }
 
+/* Hide the top color bar for the balance card since its whole background is colored */
 .summary-card.balance-card::before {
   display: none;
 }
 
+/* Override text colors for the dark balance card to ensure readability */
 .summary-card.balance-card .card-label {
   color: #94a3b8;
 }
@@ -337,6 +390,7 @@ main.content-area {
   color: #ffffff;
 }
 
+/* Apply specific gradients to the top bar for Income (green) and Expense (red) cards */
 .summary-card.income-card::before {
   background: var(--grad-income);
 }
@@ -345,6 +399,7 @@ main.content-area {
   background: var(--grad-expense);
 }
 
+/* Top container inside the card holding the label and the icon */
 .card-top {
   display: flex;
   align-items: center;
@@ -352,6 +407,7 @@ main.content-area {
   margin-bottom: 20px;
 }
 
+/* The small uppercase text "TOTAL NET BALANCE", etc. */
 .card-label {
   font-size: 0.925rem;
   font-weight: 600;
@@ -360,6 +416,7 @@ main.content-area {
   letter-spacing: 0.05em;
 }
 
+/* The icon box in the top right of the card */
 .card-icon {
   width: 48px;
   height: 48px;
@@ -371,12 +428,14 @@ main.content-area {
   transition: transform var(--transition-bounce);
 }
 
+/* Animate the icon when hovering the parent card */
 .summary-card:hover .card-icon {
   transform: scale(1.15) rotate(5deg);
 }
 
+/* Specific colors for the icons inside each type of card */
 .balance-card .card-icon {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.15); /* Semi-transparent white */
   color: #60a5fa;
   backdrop-filter: blur(8px);
 }
@@ -391,6 +450,7 @@ main.content-area {
   color: var(--expense-color);
 }
 
+/* The large numerical amount in the center of the card */
 .card-value {
   font-family: 'Poppins', sans-serif;
   font-size: 2.35rem;
@@ -400,6 +460,7 @@ main.content-area {
   margin-bottom: 12px;
 }
 
+/* The footer section of the card showing percentage trends */
 .card-footer-trend {
   display: flex;
   align-items: center;
@@ -408,6 +469,7 @@ main.content-area {
   font-weight: 500;
 }
 
+/* The small pill indicating the up/down percentage */
 .trend-badge {
   display: inline-flex;
   align-items: center;
@@ -418,22 +480,26 @@ main.content-area {
   font-size: 0.775rem;
 }
 
+/* Green styling for positive trends */
 .trend-up {
   background-color: var(--income-bg);
   color: var(--income-color);
 }
 
+/* Red styling for negative trends */
 .trend-down {
   background-color: var(--expense-bg);
   color: var(--expense-color);
 }
 
+/* Distinct trend badge styling for the dark balance card */
 .balance-card .trend-badge {
   background: rgba(255, 255, 255, 0.2);
   color: #ffffff;
 }
 
-/* --- 7. Content Sections & Cards --- */
+/* --- 7. Content Sections & Headers --- */
+/* The wrapper above things like the Transactions table */
 .section-header {
   display: flex;
   align-items: center;
@@ -443,6 +509,7 @@ main.content-area {
   gap: 16px;
 }
 
+/* The "Recent Transactions" title styling */
 .section-title {
   font-size: 1.4rem;
   color: var(--primary-midnight);
@@ -456,6 +523,7 @@ main.content-area {
 }
 
 /* --- 8. Buttons & Interactive Elements --- */
+/* Base styles shared by all buttons */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -465,14 +533,15 @@ main.content-area {
   font-family: 'Inter', sans-serif;
   font-size: 0.95rem;
   font-weight: 600;
-  border-radius: var(--radius-full);
+  border-radius: var(--radius-full); /* Pill shape */
   border: none;
   cursor: pointer;
   transition: all var(--transition-smooth);
   text-decoration: none;
-  white-space: nowrap;
+  white-space: nowrap; /* Prevents button text from breaking into two lines */
 }
 
+/* Blue primary button */
 .btn-primary {
   background: var(--grad-primary);
   color: #ffffff;
@@ -481,14 +550,16 @@ main.content-area {
 
 .btn-primary:hover {
   color: #ffffff;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
+  transform: translateY(-2px); /* Moves button up */
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35); /* Shadow gets larger to simulate elevation */
 }
 
+/* The active state occurs exactly when you click the mouse down on the button */
 .btn-primary:active {
-  transform: translateY(0);
+  transform: translateY(0); /* Pushes button back down */
 }
 
+/* Secondary button (white background with gray outline) */
 .btn-secondary {
   background-color: var(--bg-card);
   color: var(--text-secondary);
@@ -504,6 +575,7 @@ main.content-area {
   box-shadow: var(--shadow-sm);
 }
 
+/* Danger button (Red background) */
 .btn-danger {
   background: var(--grad-expense);
   color: white;
@@ -515,22 +587,25 @@ main.content-area {
   box-shadow: 0 8px 16px rgba(220, 38, 38, 0.25);
 }
 
+/* Utility class to make a button take up the full width of its parent container */
 .btn-block {
   width: 100%;
 }
 
+/* Utility class for a slightly larger button */
 .btn-lg {
   padding: 14px 28px;
   font-size: 1.05rem;
 }
 
 /* --- 9. Tables & Financial Data Display --- */
+/* A container that wraps the table to give it rounded corners, background, and shadows */
 .table-container {
   background: var(--bg-card);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-md);
   border: 1px solid var(--border-color);
-  overflow: hidden;
+  overflow: hidden; /* Prevents the square table from poking out of the rounded container */
   transition: box-shadow var(--transition-smooth);
 }
 
@@ -538,12 +613,14 @@ main.content-area {
   box-shadow: var(--shadow-lg);
 }
 
+/* The actual table element */
 .data-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: collapse; /* Removes gap between cell borders */
   text-align: left;
 }
 
+/* Table Headers (Date, Category, Amount) */
 .data-table th {
   background-color: var(--bg-subtle);
   color: var(--text-muted);
@@ -555,34 +632,38 @@ main.content-area {
   border-bottom: 1px solid var(--border-color);
 }
 
+/* Standard Table Data Cells */
 .data-table td {
   padding: 18px 24px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color); /* Line separating rows */
   font-size: 0.95rem;
   color: var(--text-main);
   transition: background-color var(--transition-fast);
 }
 
+/* Removes the border on the very last row so it doesn't clash with the container border */
 .data-table tbody tr:last-child td {
   border-bottom: none;
 }
 
+/* Adds a hover effect to rows in the table body */
 .data-table tbody tr {
   transition: all var(--transition-fast);
 }
 
 .data-table tbody tr:hover {
   background-color: var(--primary-soft);
-  transform: scale(1.002);
+  transform: scale(1.002); /* Slight "pop" effect */
 }
 
-/* Table Specific Cell Styles */
+/* Specific styling for the 'Date' column */
 .cell-date {
   color: var(--text-secondary);
   font-weight: 500;
-  white-space: nowrap;
+  white-space: nowrap; /* Prevents the date from wrapping to two lines */
 }
 
+/* Container inside the 'Category' cell that groups the icon and text */
 .cell-category {
   display: flex;
   align-items: center;
@@ -591,6 +672,7 @@ main.content-area {
   color: var(--text-main);
 }
 
+/* The square icon box inside the category cell */
 .category-icon {
   width: 38px;
   height: 38px;
@@ -605,17 +687,19 @@ main.content-area {
   transition: transform var(--transition-bounce);
 }
 
+/* Animates the icon box specifically when its row is hovered */
 .data-table tbody tr:hover .category-icon {
   transform: scale(1.15) rotate(6deg);
   background-color: #ffffff;
   color: var(--primary-navy);
 }
 
+/* Description text styling */
 .cell-desc {
   color: var(--text-secondary);
 }
 
-/* Badges for Type */
+/* Pill-shaped badges indicating if a row is Income or Expense */
 .type-badge {
   display: inline-flex;
   align-items: center;
@@ -640,7 +724,7 @@ main.content-area {
   border: 1px solid var(--expense-border);
 }
 
-/* Amount Column Styling */
+/* The numerical amount column */
 .cell-amount {
   font-family: 'Poppins', sans-serif;
   font-weight: 700;
@@ -649,15 +733,18 @@ main.content-area {
   white-space: nowrap;
 }
 
+/* Applies green text to income values */
 .amount-income {
   color: var(--income-color);
 }
 
+/* Applies red text to expense values */
 .amount-expense {
   color: var(--expense-color);
 }
 
-/* --- 10. Forms & Validation Styling (CSS-Only) --- */
+/* --- 10. Forms & Validation Styling --- */
+/* The main container holding forms (like the Add Transaction form) */
 .form-card {
   background: var(--bg-card);
   border-radius: var(--radius-xl);
@@ -670,6 +757,7 @@ main.content-area {
   overflow: hidden;
 }
 
+/* Adds a gradient bar at the top of the form card */
 .form-card::top-border, .form-card::before {
   content: '';
   position: absolute;
@@ -680,10 +768,12 @@ main.content-area {
   background: var(--grad-primary);
 }
 
+/* Wrapper around an input and its label */
 .form-group {
   margin-bottom: 24px;
 }
 
+/* The text describing the input field */
 .form-label {
   display: block;
   font-size: 0.9rem;
@@ -692,11 +782,13 @@ main.content-area {
   margin-bottom: 8px;
 }
 
+/* The red asterisk indicating a required field */
 .form-label span.required {
   color: var(--expense-color);
   margin-left: 4px;
 }
 
+/* Base styles for input fields (text, number, date, etc.) */
 .form-control {
   width: 100%;
   padding: 14px 18px;
@@ -707,30 +799,39 @@ main.content-area {
   border: 1.5px solid var(--border-color);
   border-radius: var(--radius-md);
   transition: all var(--transition-fast);
-  outline: none;
+  outline: none; /* Removes the default blue browser outline */
 }
 
+/* Darkens border when hovered */
 .form-control:hover {
   border-color: #cbd5e1;
   background-color: #ffffff;
 }
 
+/* Applies custom border and soft glow when the user clicks inside the input (focus) */
 .form-control:focus {
   border-color: var(--border-focus);
   background-color: #ffffff;
   box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
 }
 
-/* HTML5 Form Validation CSS Styling */
+/* 
+   HTML5 Form Validation CSS Styling 
+   The pseudo-class :not(:placeholder-shown) ensures validation styles only apply AFTER 
+   the user has typed something (not when the field is empty and just showing a placeholder).
+*/
+
+/* If the input is valid (e.g., correct email format), give it a green border and checkmark icon */
 .form-control:not(:placeholder-shown):valid {
   border-color: var(--income-color);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23059669'%3E%3Cpath fill-rule='evenodd' d='M19.916 4.626a.75.75 0 01.208 1.04l-9 13.5a.75.75 0 01-1.154.114l-6-6a.75.75 0 011.06-1.06l5.353 5.353 8.493-12.739a.75.75 0 011.04-.208z' clip-rule='evenodd'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 14px center;
   background-size: 20px;
-  padding-right: 44px;
+  padding-right: 44px; /* Leaves space so text doesn't overlap the icon */
 }
 
+/* If the input is invalid, give it a red border and an X icon */
 .form-control:not(:placeholder-shown):invalid {
   border-color: var(--expense-color);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23dc2626'%3E%3Cpath fill-rule='evenodd' d='M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm-1.72 6.97a.75.75 0 10-1.06 1.06L10.94 12l-1.72 1.72a.75.75 0 101.06 1.06L12 13.06l1.72 1.72a.75.75 0 101.06-1.06L13.06 12l1.72-1.72a.75.75 0 10-1.06-1.06L12 10.94l-1.72-1.72z' clip-rule='evenodd'/%3E%3C/svg%3E");
@@ -740,10 +841,12 @@ main.content-area {
   padding-right: 44px;
 }
 
+/* Adds a red glow when a user focuses on an invalid field */
 .form-control:focus:invalid {
   box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.15);
 }
 
+/* Tiny text below input fields offering instructions */
 .form-helper-text {
   font-size: 0.8rem;
   color: var(--text-muted);
@@ -751,17 +854,19 @@ main.content-area {
   display: block;
 }
 
-/* Custom Radio / Type Selection Cards */
+/* Custom Radio Buttons representing the Income vs Expense selector boxes */
 .type-selector {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
   gap: 16px;
 }
 
+/* We hide the actual circle radio button completely */
 .type-option input[type="radio"] {
   display: none;
 }
 
+/* Instead, we style the <label> to look like a clickable button */
 .type-label {
   display: flex;
   align-items: center;
@@ -772,7 +877,7 @@ main.content-area {
   border: 2px solid var(--border-color);
   background-color: var(--bg-subtle);
   font-weight: 600;
-  cursor: pointer;
+  cursor: pointer; /* Changes mouse to a pointer hand to indicate it's clickable */
   transition: all var(--transition-smooth);
 }
 
@@ -785,7 +890,10 @@ main.content-area {
   transform: translateY(-2px);
 }
 
-/* Income Selected State */
+/* 
+   When the hidden radio button is 'checked', apply these styles to the adjacent sibling label (+) 
+   This makes the label turn green when selected.
+*/
 .type-option input[type="radio"]#type-income:checked + .type-label {
   background-color: var(--income-bg);
   border-color: var(--income-color);
@@ -793,7 +901,7 @@ main.content-area {
   box-shadow: 0 4px 12px rgba(5, 150, 105, 0.15);
 }
 
-/* Expense Selected State */
+/* Makes the label turn red when the expense radio button is selected */
 .type-option input[type="radio"]#type-expense:checked + .type-label {
   background-color: var(--expense-bg);
   border-color: var(--expense-color);
@@ -801,28 +909,32 @@ main.content-area {
   box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15);
 }
 
+/* Container for the Save/Cancel buttons at the bottom of a form */
 .form-actions {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-end; /* Pushes buttons to the right */
   gap: 16px;
   margin-top: 36px;
   padding-top: 24px;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--border-color); /* Separating line above buttons */
 }
 
 /* --- 11. Login Page Styling --- */
+/* The full screen container for the login page */
 .login-page {
   min-height: 100vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; /* Centers the login card exactly in the middle of the screen */
   padding: 24px;
+  /* Complex radial background specifically for the login screen */
   background: radial-gradient(circle at 10% 20%, rgba(37, 99, 235, 0.15) 0%, transparent 40%),
               radial-gradient(circle at 90% 80%, rgba(30, 58, 138, 0.2) 0%, transparent 40%),
               var(--bg-app);
 }
 
+/* The central white card holding the login form */
 .login-card {
   width: 100%;
   max-width: 440px;
@@ -834,14 +946,16 @@ main.content-area {
   text-align: center;
   position: relative;
   overflow: hidden;
-  animation: fadeIn 0.6s ease-out;
+  animation: fadeIn 0.6s ease-out; /* Uses the keyframe animation defined below */
 }
 
+/* Defines a custom animation that fades in and slides up */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* Decorative blue gradient bar at the top of the login card */
 .login-card::before {
   content: '';
   position: absolute;
@@ -856,6 +970,7 @@ main.content-area {
   margin-bottom: 32px;
 }
 
+/* The square icon box above the "Welcome Back" text */
 .login-logo {
   width: 64px;
   height: 64px;
@@ -885,10 +1000,12 @@ main.content-area {
   font-size: 0.95rem;
 }
 
+/* Ensures the text inside the form inputs aligns left, even though the card is center aligned */
 .login-form {
   text-align: left;
 }
 
+/* The bottom section of the login card containing links */
 .login-footer {
   margin-top: 32px;
   padding-top: 24px;
@@ -903,11 +1020,12 @@ main.content-area {
 }
 
 /* --- 12. Footer Section --- */
+/* The footer that appears at the bottom of the Dashboard pages */
 .app-footer {
   background-color: var(--bg-card);
   border-top: 1px solid var(--border-color);
   padding: 24px 0;
-  margin-top: auto;
+  margin-top: auto; /* Pushes the footer to the bottom of the flexbody */
   text-align: center;
   font-size: 0.875rem;
   color: var(--text-muted);
@@ -927,57 +1045,72 @@ main.content-area {
 }
 
 /* --- 13. Responsive Breakpoints --- */
+/* Media Queries allow us to change the CSS layout on smaller screens (like mobile phones) */
 @media (max-width: 768px) {
+  /* Below 768px width: */
+  
+  /* Stack the logo and nav links vertically instead of side-by-side */
   .navbar-content {
     flex-direction: column;
     gap: 16px;
     padding: 16px;
   }
 
+  /* Center the nav links */
   .nav-links {
     width: 100%;
     justify-content: center;
     flex-wrap: wrap;
   }
 
+  /* Make nav links slightly smaller to fit screen */
   .nav-link {
     padding: 8px 14px;
     font-size: 0.85rem;
   }
 
+  /* Remove margin on logout button since it's now stacked or wrapped */
   .nav-link.logout-btn {
     margin-left: 0;
   }
 
+  /* Force the summary cards grid to be exactly 1 column wide (stacked vertically) */
   .summary-grid {
     grid-template-columns: 1fr;
   }
 
+  /* Stack section headers vertically */
   .section-header {
     flex-direction: column;
     align-items: flex-start;
   }
 
+  /* Allow the table to scroll horizontally if the screen is too narrow to show all columns */
   .table-container {
     overflow-x: auto;
   }
 
+  /* Reduce padding in table cells to save space */
   .data-table th, .data-table td {
     padding: 14px 16px;
   }
 
+  /* Reduce padding in the form card */
   .form-card {
     padding: 24px 20px;
   }
 
+  /* Stack the Income/Expense radio buttons vertically */
   .type-selector {
     grid-template-columns: 1fr;
   }
 
+  /* Stack the form buttons vertically and reverse the order (so save is on top) */
   .form-actions {
     flex-direction: column-reverse;
   }
 
+  /* Make form buttons full width on mobile */
   .form-actions .btn {
     width: 100%;
   }

@@ -1,19 +1,26 @@
 <!DOCTYPE html>
+<!-- The language is set to English -->
 <html lang="en">
 <head>
+    <!-- Character encoding for standard text characters -->
     <meta charset="UTF-8">
+    <!-- Viewport settings for responsiveness on mobile devices -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Page title shown in the browser tab -->
     <title>NexTrack - White & Blue Expense Dashboard</title>
     
-    <!-- Tailwind CSS via CDN -->
+    <!-- Tailwind CSS via CDN: This loads the Tailwind CSS framework for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Tailwind Configuration for Custom Colors & Animations -->
+    <!-- Tailwind Configuration: This script customizes the Tailwind framework -->
     <script>
+        // We configure Tailwind settings here
         tailwind.config = {
             theme: {
                 extend: {
+                    // Custom color palettes
                     colors: {
+                        // Brand colors (shades of blue)
                         brand: {
                             50: '#eff6ff',
                             100: '#dbeafe',
@@ -22,6 +29,7 @@
                             700: '#1d4ed8',
                             900: '#1e3a8a',
                         },
+                        // Slate colors (grayish-blue for background and text)
                         slate: {
                             50: '#f8fafc',
                             100: '#f1f5f9',
@@ -30,11 +38,13 @@
                             900: '#0f172a',
                         }
                     },
+                    // Custom animations we can use via Tailwind classes
                     animation: {
-                        'fade-in': 'fadeIn 0.3s ease-out',
-                        'slide-up': 'slideUp 0.4s ease-out',
-                        'slide-in-right': 'slideInRight 0.3s ease-out'
+                        'fade-in': 'fadeIn 0.3s ease-out', // A simple fade-in effect
+                        'slide-up': 'slideUp 0.4s ease-out', // Slides an element up while fading in
+                        'slide-in-right': 'slideInRight 0.3s ease-out' // Slides an element from right to left
                     },
+                    // Definitions of the actual keyframes for the custom animations
                     keyframes: {
                         fadeIn: {
                             '0%': { opacity: '0' },
@@ -54,94 +64,114 @@
         }
     </script>
 
-    <!-- Lucide Icons -->
+    <!-- Lucide Icons: A library to display beautiful SVG icons (e.g. wallet, logout, mail) -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
+    <!-- Custom vanilla CSS for things Tailwind doesn't handle natively -->
     <style>
-        /* Custom scrollbar for webkit */
+        /* Custom scrollbar styling for webkit browsers (Chrome, Safari, Edge) */
         ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+            width: 8px; /* Width of the scrollbar */
+            height: 8px; /* Height for horizontal scrollbars */
         }
         ::-webkit-scrollbar-track {
-            background: #f1f5f9; 
+            background: #f1f5f9; /* Background track of the scrollbar */
         }
         ::-webkit-scrollbar-thumb {
-            background: #cbd5e1; 
-            border-radius: 4px;
+            background: #cbd5e1; /* The draggable part of the scrollbar */
+            border-radius: 4px; /* Rounded corners for the thumb */
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8; 
+            background: #94a3b8; /* Darker thumb on hover */
         }
 
-        /* Glassmorphism utility classes */
+        /* Glassmorphism utility class: Gives a frosted-glass look */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+            background: rgba(255, 255, 255, 0.9); /* Mostly white, slightly transparent */
+            backdrop-filter: blur(12px); /* Blur the content behind it */
+            -webkit-backdrop-filter: blur(12px); /* Safari support for blur */
+            border: 1px solid rgba(226, 232, 240, 0.8); /* Faint border */
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04); /* Soft shadow */
         }
         
+        /* Glass styling for input fields */
         .glass-input {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            color: #1e293b;
+            background: #ffffff; /* Solid white background */
+            border: 1px solid #e2e8f0; /* Light gray border */
+            color: #1e293b; /* Dark text color */
         }
         
+        /* Styles applied when the user focuses on an input field */
         .glass-input:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
-            outline: none;
+            border-color: #3b82f6; /* Blue border */
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); /* Soft blue glow */
+            outline: none; /* Remove default browser outline */
         }
     </style>
 </head>
+
+<!-- The body section. Uses Tailwind classes for background color, text color, font, and disabling horizontal scrolling -->
 <body class="bg-slate-50 text-slate-800 min-h-screen font-sans antialiased overflow-x-hidden selection:bg-brand-500 selection:text-white">
 
-    <!-- Background Gradient Orbs (Subtle Light Mode) -->
+    <!-- Background Gradient Orbs (Subtle decorations in Light Mode) -->
     <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <!-- Top left blurry blue orb -->
         <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-brand-500/10 blur-[120px]"></div>
+        <!-- Bottom right blurry cyan orb -->
         <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-cyan-500/10 blur-[120px]"></div>
     </div>
 
-    <!-- Toast Notification Container -->
+    <!-- Container for toast notifications (small popup alerts like "Saved successfully") -->
     <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2"></div>
 
     <!-- ==========================================
          AUTHENTICATION GATE
          ========================================== -->
+    <!-- This section is shown initially to simulate a login screen -->
     <div id="auth-view" class="relative z-10 flex min-h-screen items-center justify-center p-4 transition-opacity duration-500">
+        <!-- Login card with glass styling and slide-up animation -->
         <div class="glass-panel w-full max-w-md rounded-2xl p-8 animate-slide-up shadow-xl">
+            <!-- Icon container at the top center -->
             <div class="flex justify-center mb-6">
                 <div class="h-14 w-14 rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center shadow-lg shadow-brand-500/30">
                     <i data-lucide="wallet" class="text-white h-7 w-7"></i>
                 </div>
             </div>
             
+            <!-- Welcome title -->
             <h2 class="text-2xl font-bold text-center text-slate-900 mb-2" id="auth-title">Welcome to NexTrack</h2>
+            <!-- Subtitle -->
             <p class="text-slate-500 text-center mb-8 text-sm">Securely manage your expenses</p>
 
+            <!-- Login form -->
             <form id="auth-form" class="space-y-5">
+                <!-- Email field -->
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-1.5">Email Address</label>
                     <div class="relative">
+                        <!-- Email icon -->
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <i data-lucide="mail" class="h-5 w-5 text-slate-400"></i>
                         </div>
+                        <!-- Email input element -->
                         <input type="email" id="email" required class="glass-input w-full pl-10 pr-4 py-2.5 rounded-lg transition-all" placeholder="name@example.com">
                     </div>
                 </div>
                 
+                <!-- Password field -->
                 <div>
                     <label class="block text-sm font-semibold text-slate-700 mb-1.5">Password</label>
                     <div class="relative">
+                        <!-- Password lock icon -->
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                             <i data-lucide="lock" class="h-5 w-5 text-slate-400"></i>
                         </div>
+                        <!-- Password input element -->
                         <input type="password" id="password" required class="glass-input w-full pl-10 pr-4 py-2.5 rounded-lg transition-all" placeholder="••••••••">
                     </div>
                 </div>
 
+                <!-- Submit button for login -->
                 <button type="submit" class="w-full py-2.5 px-4 bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-700 hover:to-brand-600 text-white font-semibold rounded-lg shadow-md transition-all transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 mt-2">
                     Access Dashboard
                 </button>
@@ -152,11 +182,13 @@
     <!-- ==========================================
          DASHBOARD APP VIEW
          ========================================== -->
+    <!-- This is the main dashboard, hidden by default until the user "logs in" -->
     <div id="app-view" class="relative z-10 hidden min-h-screen flex-col animate-fade-in">
         
-        <!-- Header / Nav -->
+        <!-- Header / Navigation Bar -->
         <header class="glass-panel border-b border-slate-200 sticky top-0 z-40 bg-white/80">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+                <!-- App Logo and Title -->
                 <div class="flex items-center gap-3">
                     <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center shadow-sm">
                         <i data-lucide="wallet" class="text-white h-4 w-4"></i>
@@ -164,11 +196,14 @@
                     <h1 class="text-lg font-bold text-brand-900 tracking-wide">NexTrack</h1>
                 </div>
                 
+                <!-- Right side: User greeting and Logout button -->
                 <div class="flex items-center gap-4">
+                    <!-- User greeting pill with pulsing green dot for "online" status -->
                     <div class="hidden sm:flex items-center gap-2 text-sm text-slate-600 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">
                         <div class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></div>
                         <span id="user-greeting" class="font-medium">Hello, User</span>
                     </div>
+                    <!-- Logout button -->
                     <button id="logout-btn" class="p-2 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors" title="Sign Out">
                         <i data-lucide="log-out" class="h-5 w-5"></i>
                     </button>
@@ -176,15 +211,16 @@
             </div>
         </header>
 
-        <!-- Main Content Grid -->
+        <!-- Main Content Area Grid -->
         <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
             
-            <!-- Welcome Row -->
+            <!-- Dashboard Title Row with Export Button -->
             <div class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
                 <div>
                     <h2 class="text-2xl font-bold text-slate-900 mb-1">Financial Overview</h2>
                     <p class="text-slate-500 text-sm">Track and manage your expenses seamlessly.</p>
                 </div>
+                <!-- Export to CSV button -->
                 <div class="flex gap-2">
                     <button id="export-btn" class="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 rounded-lg text-sm font-semibold shadow-sm transition-colors flex items-center gap-2">
                         <i data-lucide="download" class="h-4 w-4"></i> Export CSV
@@ -192,16 +228,18 @@
                 </div>
             </div>
 
-            <!-- Metrics Overview Cards -->
+            <!-- Metrics Overview Cards (Total, Monthly, Categories) -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 
-                <!-- Metric 1: Total Expenses -->
+                <!-- Metric Card 1: Total Expenses -->
                 <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group border-t-4 border-t-rose-500">
+                    <!-- Faded background icon for decoration -->
                     <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                         <i data-lucide="trending-down" class="h-24 w-24 text-rose-600 transform rotate-12"></i>
                     </div>
                     <div class="relative z-10">
                         <p class="text-slate-500 text-sm font-semibold mb-1 uppercase tracking-wider">Total Expenses</p>
+                        <!-- Dynamic total amount injected here -->
                         <h3 class="text-3xl font-bold text-slate-900 tracking-tight" id="metric-total">$0.00</h3>
                         <div class="mt-4 flex items-center text-xs text-rose-600 font-bold">
                             <i data-lucide="arrow-up-right" class="h-3 w-3 mr-1"></i> Lifetime Tracked
@@ -209,13 +247,14 @@
                     </div>
                 </div>
 
-                <!-- Metric 2: Monthly Aggregate -->
+                <!-- Metric Card 2: Current Month Expenses -->
                 <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group border-t-4 border-t-brand-500">
                     <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                         <i data-lucide="calendar" class="h-24 w-24 text-brand-600 transform rotate-12"></i>
                     </div>
                     <div class="relative z-10">
                         <p class="text-slate-500 text-sm font-semibold mb-1 uppercase tracking-wider">Current Month</p>
+                        <!-- Dynamic monthly amount injected here -->
                         <h3 class="text-3xl font-bold text-slate-900 tracking-tight" id="metric-monthly">$0.00</h3>
                         <div class="mt-4 flex items-center text-xs text-slate-500 font-bold" id="current-month-label">
                             <i data-lucide="clock" class="h-3 w-3 mr-1"></i> Based on 30 days
@@ -223,13 +262,14 @@
                     </div>
                 </div>
 
-                <!-- Metric 3: Active Categories -->
+                <!-- Metric Card 3: Active Categories -->
                 <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group border-t-4 border-t-emerald-500">
                     <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
                         <i data-lucide="pie-chart" class="h-24 w-24 text-emerald-600 transform -rotate-12"></i>
                     </div>
                     <div class="relative z-10">
                         <p class="text-slate-500 text-sm font-semibold mb-1 uppercase tracking-wider">Active Categories</p>
+                        <!-- Dynamic category count injected here -->
                         <h3 class="text-3xl font-bold text-slate-900 tracking-tight" id="metric-categories">0</h3>
                         <div class="mt-4 flex items-center text-xs text-emerald-600 font-bold">
                             <i data-lucide="activity" class="h-3 w-3 mr-1"></i> Diversified Spending
@@ -238,18 +278,21 @@
                 </div>
             </div>
 
-            <!-- Dashboard Main Columns -->
+            <!-- Two-column layout for Form & Ledger -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 
-                <!-- LEFT COLUMN: Form & Visualizations -->
+                <!-- LEFT COLUMN: Expense Form and Visual Chart -->
                 <div class="space-y-8 lg:col-span-1">
                     
-                    <!-- Expense Entry Form -->
+                    <!-- Expense Entry Form Card -->
                     <div class="glass-panel rounded-2xl p-6">
                         <h3 class="text-lg font-bold text-slate-900 mb-5 flex items-center gap-2">
                             <i data-lucide="plus-circle" class="h-5 w-5 text-brand-600"></i> Add Expense
                         </h3>
+                        
+                        <!-- Form structure to add new expenses -->
                         <form id="expense-form" class="space-y-4">
+                            <!-- Amount input -->
                             <div>
                                 <label class="block text-xs font-bold text-slate-600 mb-1">Amount ($)</label>
                                 <div class="relative">
@@ -260,6 +303,7 @@
                                 </div>
                             </div>
                             
+                            <!-- Category dropdown selector -->
                             <div>
                                 <label class="block text-xs font-bold text-slate-600 mb-1">Category</label>
                                 <select id="exp-category" required class="glass-input w-full px-3 py-2.5 rounded-lg text-sm font-medium bg-white">
@@ -274,44 +318,48 @@
                                 </select>
                             </div>
 
+                            <!-- Description input -->
                             <div>
                                 <label class="block text-xs font-bold text-slate-600 mb-1">Description</label>
                                 <input type="text" id="exp-desc" required maxlength="50" class="glass-input w-full px-3 py-2.5 rounded-lg text-sm font-medium" placeholder="What was this for?">
                             </div>
 
+                            <!-- Date input -->
                             <div>
                                 <label class="block text-xs font-bold text-slate-600 mb-1">Date</label>
                                 <input type="date" id="exp-date" required class="glass-input w-full px-3 py-2.5 rounded-lg text-sm font-medium">
                             </div>
 
+                            <!-- Submit button -->
                             <button type="submit" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg transition-colors shadow-md mt-4 flex items-center justify-center gap-2">
                                 <i data-lucide="check" class="h-4 w-4"></i> Save Record
                             </button>
                         </form>
                     </div>
 
-                    <!-- CSS Visualizations (Category Breakdown) -->
+                    <!-- CSS Visualizations (Progress bars showing category breakdown) -->
                     <div class="glass-panel rounded-2xl p-6">
                         <h3 class="text-lg font-bold text-slate-900 mb-5 flex items-center gap-2">
                             <i data-lucide="bar-chart-2" class="h-5 w-5 text-brand-600"></i> Category Breakdown
                         </h3>
                         <div id="chart-container" class="space-y-4">
-                            <!-- Bars injected via JS -->
+                            <!-- Category progress bars will be injected here via JavaScript -->
                             <p class="text-sm text-slate-500 text-center py-4">No data available yet.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- RIGHT COLUMN: Transaction Ledger -->
+                <!-- RIGHT COLUMN: Transaction Ledger (History) -->
                 <div class="lg:col-span-2">
                     <div class="glass-panel rounded-2xl p-6 flex flex-col h-full min-h-[600px] shadow-sm">
                         
-                        <!-- Ledger Header & Search -->
+                        <!-- Ledger Header & Search bar -->
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
                             <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
                                 <i data-lucide="list" class="h-5 w-5 text-brand-600"></i> Transaction Ledger
                             </h3>
                             
+                            <!-- Search filter input -->
                             <div class="relative w-full sm:w-64">
                                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <i data-lucide="search" class="h-4 w-4 text-slate-400"></i>
@@ -320,21 +368,21 @@
                             </div>
                         </div>
 
-                        <!-- Table Headers -->
+                        <!-- Table Headers (Hidden on small screens) -->
                         <div class="grid grid-cols-12 gap-4 px-4 py-3 border-b border-slate-200 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 hidden sm:grid">
                             <div class="col-span-2">Date</div>
                             <div class="col-span-4">Description</div>
                             <div class="col-span-3">Category</div>
                             <div class="col-span-2 text-right">Amount</div>
-                            <div class="col-span-1 text-right"></div>
+                            <div class="col-span-1 text-right"></div> <!-- Space for delete button -->
                         </div>
 
-                        <!-- Scrollable Feed -->
+                        <!-- Scrollable Feed: This is where transaction rows go -->
                         <div id="transaction-list" class="flex-1 overflow-y-auto pr-2 space-y-2">
-                            <!-- Items injected via JS -->
+                            <!-- Individual expense items injected via JS -->
                         </div>
                         
-                        <!-- Empty State -->
+                        <!-- Empty State: Displayed when no transactions exist -->
                         <div id="empty-state" class="hidden flex-col items-center justify-center py-16 opacity-70">
                             <i data-lucide="inbox" class="h-16 w-16 text-slate-400 mb-4"></i>
                             <p class="text-slate-600 font-bold">No transactions found.</p>
@@ -352,129 +400,163 @@
          APPLICATION LOGIC (Vanilla JS)
          ========================================== -->
     <script>
+        // Wait for the entire HTML document to be fully loaded before running JS
         document.addEventListener('DOMContentLoaded', () => {
             
             // --- Initialize Icons ---
+            // Replaces <i data-lucide="..."> with actual SVG graphics
             lucide.createIcons();
 
             // --- State Management ---
+            // Retrieve saved expenses from local storage, or default to an empty array
             let expenses = JSON.parse(localStorage.getItem('nextrack_expenses_light')) || [];
 
-            // --- DOM Elements ---
+            // --- Get DOM Elements (References to HTML parts) ---
             // Views
             const authView = document.getElementById('auth-view');
             const appView = document.getElementById('app-view');
-            // Auth
+            
+            // Auth elements
             const authForm = document.getElementById('auth-form');
             const emailInput = document.getElementById('email');
             const logoutBtn = document.getElementById('logout-btn');
             const userGreeting = document.getElementById('user-greeting');
-            // Form
+            
+            // Form elements
             const expenseForm = document.getElementById('expense-form');
             const expAmount = document.getElementById('exp-amount');
             const expCategory = document.getElementById('exp-category');
             const expDesc = document.getElementById('exp-desc');
             const expDate = document.getElementById('exp-date');
-            // Ledger
+            
+            // Ledger and Search elements
             const transactionList = document.getElementById('transaction-list');
             const emptyState = document.getElementById('empty-state');
             const searchFilter = document.getElementById('search-filter');
-            // Metrics
+            
+            // Metrics and Chart elements
             const metricTotal = document.getElementById('metric-total');
             const metricMonthly = document.getElementById('metric-monthly');
             const metricCategories = document.getElementById('metric-categories');
             const chartContainer = document.getElementById('chart-container');
 
-            // Set default date to today
+            // --- Initial Setup ---
+            // Pre-fill the date input with today's date
             expDate.value = new Date().toISOString().split('T')[0];
 
             // --- Authentication Logic ---
-            // Check if already logged in (simulated session)
+            // If sessionStorage indicates the user is logged in, show the app immediately
             if (sessionStorage.getItem('nextrack_auth_light') === 'true') {
                 showApp();
             }
 
+            // Handle the login form submission
             authForm.addEventListener('submit', (e) => {
-                e.preventDefault();
+                e.preventDefault(); // Stop page reload
                 if (emailInput.value && document.getElementById('password').value) {
+                    // Set a simple session flag to simulate being logged in
                     sessionStorage.setItem('nextrack_auth_light', 'true');
+                    // Extract name from email to use as username
                     sessionStorage.setItem('nextrack_user', emailInput.value.split('@')[0]);
-                    showToast('Welcome back!', 'success');
-                    showApp();
+                    
+                    showToast('Welcome back!', 'success'); // Show success notification
+                    showApp(); // Switch views
                 }
             });
 
+            // Handle logout
             logoutBtn.addEventListener('click', () => {
-                sessionStorage.removeItem('nextrack_auth_light');
+                sessionStorage.removeItem('nextrack_auth_light'); // Clear session
                 showToast('Logged out successfully', 'info');
+                
+                // Hide app, show login
                 authView.classList.remove('hidden');
                 appView.classList.add('hidden');
             });
 
+            // Function to transition from login to the main dashboard
             function showApp() {
                 authView.classList.add('hidden');
                 appView.classList.remove('hidden');
                 
+                // Set the user greeting message
                 const username = sessionStorage.getItem('nextrack_user') || 'User';
                 userGreeting.textContent = `Hello, ${username.charAt(0).toUpperCase() + username.slice(1)}`;
                 
+                // Render the dashboard data
                 renderDashboard();
             }
 
-            // --- CRUD & Rendering Logic ---
+            // --- CRUD (Create, Read, Update, Delete) & Rendering Logic ---
+            
+            // Handle adding a new expense
             expenseForm.addEventListener('submit', (e) => {
-                e.preventDefault();
+                e.preventDefault(); // Stop page reload
                 
+                // Construct a new expense object
                 const newExpense = {
-                    id: Date.now().toString(),
-                    amount: parseFloat(expAmount.value),
+                    id: Date.now().toString(), // Unique ID based on time
+                    amount: parseFloat(expAmount.value), // Convert text amount to float number
                     category: expCategory.value,
                     desc: expDesc.value.trim(),
                     date: expDate.value
                 };
 
-                expenses.unshift(newExpense); // Add to top
-                saveData();
+                // Add to the beginning (top) of the list
+                expenses.unshift(newExpense); 
+                saveData(); // Save to local storage
                 
-                // Reset form
+                // Reset form fields
                 expenseForm.reset();
                 expDate.value = new Date().toISOString().split('T')[0]; // reset date to today
                 
                 showToast('Expense recorded successfully', 'success');
-                renderDashboard();
+                renderDashboard(); // Re-render the UI
             });
 
+            // Make the delete function global so it can be called from inline HTML strings
             window.deleteExpense = (id) => {
+                // Filter out the expense with the matching ID
                 expenses = expenses.filter(exp => exp.id !== id);
                 saveData();
                 showToast('Record deleted', 'info');
                 renderDashboard();
             };
 
+            // Handle search bar typing
             searchFilter.addEventListener('input', (e) => {
+                // Re-render the list, passing the typed text as a filter
                 renderDashboard(e.target.value.toLowerCase());
             });
 
+            // Handle CSV Export
             document.getElementById('export-btn').addEventListener('click', () => {
                 if(expenses.length === 0) return showToast('No data to export', 'error');
                 
+                // Start building the CSV string with headers
                 let csv = 'Date,Category,Description,Amount\n';
+                // Append each expense as a row
                 expenses.forEach(row => {
                     csv += `${row.date},"${row.category}","${row.desc}",${row.amount}\n`;
                 });
                 
+                // Create a virtual file (Blob)
                 const blob = new Blob([csv], { type: 'text/csv' });
                 const url = window.URL.createObjectURL(blob);
+                
+                // Create a hidden link to download the file and trigger click
                 const a = document.createElement('a');
                 a.setAttribute('href', url);
                 a.setAttribute('download', `nextrack_export_${new Date().toISOString().split('T')[0]}.csv`);
                 a.click();
+                
                 showToast('Export complete', 'success');
             });
 
             // --- Core Rendering Engine ---
+            // Updates the transaction list and metrics on the screen
             function renderDashboard(filterQuery = '') {
-                // Filter data
+                // 1. Filter the data based on search input
                 let displayData = expenses;
                 if (filterQuery) {
                     displayData = expenses.filter(exp => 
@@ -483,21 +565,29 @@
                     );
                 }
 
-                // Render List
+                // 2. Clear out the current list HTML
                 transactionList.innerHTML = '';
+                
+                // 3. Render Empty State or List
                 if (displayData.length === 0) {
+                    // Show empty state if no data matches
                     emptyState.classList.remove('hidden');
                     emptyState.classList.add('flex');
                 } else {
+                    // Hide empty state
                     emptyState.classList.add('hidden');
                     emptyState.classList.remove('flex');
                     
+                    // Build HTML for each transaction row
                     displayData.forEach(exp => {
                         const item = document.createElement('div');
+                        // Tailwind classes for the row styling, hover effects, and grid layout
                         item.className = 'group flex flex-col sm:grid sm:grid-cols-12 gap-2 sm:gap-4 p-3 sm:px-4 sm:py-3 bg-white border border-slate-200 hover:border-brand-300 hover:shadow-md rounded-xl transition-all animate-slide-in-right items-start sm:items-center';
                         
+                        // Get specific styling colors based on the category
                         const categoryColors = getCategoryColor(exp.category);
                         
+                        // The HTML structure of a row
                         item.innerHTML = `
                             <div class="col-span-2 text-xs text-slate-500 font-bold w-full sm:w-auto">
                                 ${formatDate(exp.date)}
@@ -513,6 +603,7 @@
                             <div class="col-span-2 text-left sm:text-right font-bold text-rose-600 w-full sm:w-auto">
                                 -$${exp.amount.toFixed(2)}
                             </div>
+                            <!-- Delete button (visible on hover on desktop) -->
                             <div class="col-span-1 text-right sm:opacity-0 group-hover:opacity-100 transition-opacity absolute top-3 right-3 sm:relative sm:top-0 sm:right-0">
                                 <button onclick="deleteExpense('${exp.id}')" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-md transition-colors" title="Delete">
                                     <i data-lucide="trash-2" class="h-4 w-4"></i>
@@ -521,18 +612,20 @@
                         `;
                         transactionList.appendChild(item);
                     });
-                    lucide.createIcons(); // re-init icons for new DOM elements
+                    lucide.createIcons(); // Re-initialize icons for the new DOM elements
                 }
 
-                // Calculate & Render Metrics
+                // 4. Update the numerical metrics at the top
                 calculateMetrics();
             }
 
+            // Function to crunch numbers for the top metrics cards
             function calculateMetrics() {
+                // Calculate total of all time
                 const total = expenses.reduce((sum, exp) => sum + exp.amount, 0);
                 metricTotal.textContent = formatCurrency(total);
 
-                // Monthly calculation
+                // Calculate total for current month
                 const currentMonth = new Date().getMonth();
                 const currentYear = new Date().getFullYear();
                 
@@ -543,32 +636,39 @@
                 const monthlyTotal = monthlyExpenses.reduce((sum, exp) => sum + exp.amount, 0);
                 metricMonthly.textContent = formatCurrency(monthlyTotal);
 
-                // Category Breakdown
+                // Tally spending per category
                 const categoryTotals = {};
                 expenses.forEach(exp => {
+                    // If category exists, add to it, otherwise initialize to 0 then add
                     categoryTotals[exp.category] = (categoryTotals[exp.category] || 0) + exp.amount;
                 });
                 
+                // Number of unique active categories
                 const activeCats = Object.keys(categoryTotals).length;
                 metricCategories.textContent = activeCats;
 
-                // Render Chart
+                // Call function to update visual bars
                 renderChart(categoryTotals, total);
             }
 
+            // Function to generate the Category Breakdown HTML bars
             function renderChart(categoryTotals, grandTotal) {
-                chartContainer.innerHTML = '';
+                chartContainer.innerHTML = ''; // Clear existing chart
                 
+                // If no expenses, show placeholder text
                 if (grandTotal === 0) {
                     chartContainer.innerHTML = '<p class="text-sm text-slate-500 font-medium text-center py-4">No data available yet.</p>';
                     return;
                 }
 
-                // Sort by amount descending
+                // Sort categories from highest amount to lowest amount
                 const sortedCats = Object.entries(categoryTotals).sort((a, b) => b[1] - a[1]);
 
+                // Create a bar for each category
                 sortedCats.forEach(([category, amount]) => {
+                    // Calculate percentage relative to total
                     const percentage = Math.round((amount / grandTotal) * 100);
+                    // Fetch appropriate color classes
                     const colors = getCategoryColor(category);
                     
                     const barHtml = `
@@ -577,7 +677,9 @@
                                 <span class="text-slate-700">${category}</span>
                                 <span class="text-slate-800">$${amount.toFixed(2)} <span class="text-slate-500 font-medium">(${percentage}%)</span></span>
                             </div>
+                            <!-- Background track of the progress bar -->
                             <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden shadow-inner">
+                                <!-- Colored fill of the progress bar, width based on percentage -->
                                 <div class="h-2 rounded-full ${colors.solidBg} transition-all duration-1000 ease-out" style="width: ${percentage}%"></div>
                             </div>
                         </div>
@@ -586,42 +688,52 @@
                 });
             }
 
-            // --- Utilities ---
+            // --- Helper Utilities ---
+            
+            // Save the expenses array to local storage as a string
             function saveData() {
                 localStorage.setItem('nextrack_expenses_light', JSON.stringify(expenses));
             }
 
+            // Format numbers to USD currency standard
             function formatCurrency(num) {
                 return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num);
             }
 
+            // Format dates (e.g., "Oct 25, 2023")
             function formatDate(dateStr) {
                 const opts = { month: 'short', day: 'numeric', year: 'numeric' };
                 return new Date(dateStr).toLocaleDateString('en-US', opts);
             }
 
+            // Create and animate a toast notification (popup)
             function showToast(message, type = 'info') {
                 const container = document.getElementById('toast-container');
                 const toast = document.createElement('div');
                 
+                // Define color palettes based on toast type
                 const colors = {
                     success: 'bg-emerald-50 border-emerald-200 text-emerald-700',
                     error: 'bg-rose-50 border-rose-200 text-rose-700',
                     info: 'bg-brand-50 border-brand-200 text-brand-700'
                 };
                 
+                // Define icons based on toast type
                 const icons = {
                     success: 'check-circle',
                     error: 'alert-circle',
                     info: 'info'
                 };
 
+                // Apply styling to toast container
                 toast.className = `flex items-center gap-2 px-4 py-3 rounded-lg border shadow-lg animate-slide-in-right ${colors[type]}`;
                 toast.innerHTML = `<i data-lucide="${icons[type]}" class="h-4 w-4"></i> <span class="text-sm font-bold">${message}</span>`;
                 
+                // Add to page
                 container.appendChild(toast);
-                lucide.createIcons();
+                lucide.createIcons(); // Render the SVG icon
                 
+                // Automatically fade out and remove after 3 seconds
                 setTimeout(() => {
                     toast.style.opacity = '0';
                     toast.style.transform = 'translateX(20px)';
@@ -630,6 +742,7 @@
                 }, 3000);
             }
 
+            // Maps a category string to a set of specific Tailwind color classes
             function getCategoryColor(category) {
                 const map = {
                     'Food & Dining': { bg: 'bg-orange-50', text: 'text-orange-700', border: 'border-orange-200', solidBg: 'bg-orange-500' },
@@ -640,6 +753,7 @@
                     'Healthcare': { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200', solidBg: 'bg-emerald-500' },
                     'Miscellaneous': { bg: 'bg-slate-50', text: 'text-slate-700', border: 'border-slate-200', solidBg: 'bg-slate-500' }
                 };
+                // Fallback to Miscellaneous if category not found
                 return map[category] || map['Miscellaneous'];
             }
         });

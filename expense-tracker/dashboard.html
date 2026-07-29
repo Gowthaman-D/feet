@@ -1,28 +1,48 @@
 <!DOCTYPE html>
+<!-- Declares the document as an HTML5 file. This is required for modern web pages. -->
 <html lang="en">
+<!-- The <head> contains meta-information, title, and external links. It is not shown directly on the page. -->
 <head>
+  <!-- Sets character encoding to UTF-8 so all text and symbols render correctly -->
   <meta charset="UTF-8">
+  <!-- Ensures the page is responsive and scales properly on mobile devices -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- The title that appears in the browser tab -->
   <title>Dashboard - Smart Expense Tracker</title>
-  <!-- Font Awesome Icons via CDN -->
+  
+  <!-- Links to the Font Awesome icon library to give us access to thousands of icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Shared Stylesheet -->
+  
+  <!-- Links to our custom style.css file where all our design rules live -->
   <link rel="stylesheet" href="style.css">
 </head>
+<!-- The <body> contains the actual visible content of the dashboard -->
 <body>
 
-  <!-- Top Navigation Bar -->
+  <!-- ========================================== -->
+  <!-- TOP NAVIGATION BAR SECTION                 -->
+  <!-- ========================================== -->
+  <!-- The <header> tag represents the top navigation area of our application -->
   <header class="top-navbar">
+    <!-- <nav> is a semantic HTML element that wraps navigation links -->
     <nav class="navbar-content">
+      
+      <!-- Brand Logo on the left side of the navbar -->
+      <!-- Clicking it will navigate to dashboard.html -->
       <a href="dashboard.html" class="brand-logo">
         <div class="brand-icon-wrapper">
+          <!-- Font Awesome vault icon -->
           <i class="fa-solid fa-vault"></i>
         </div>
+        <!-- Brand Name text. The <small> tag makes the "FINANCIAL TRACKER" text smaller -->
         <span>SmartVault <small style="font-size: 0.65em; font-weight: 500; color: var(--primary-light); display: block; margin-top: -4px;">FINANCIAL TRACKER</small></span>
       </a>
 
+      <!-- An unordered list (<ul>) containing our navigation links -->
       <ul class="nav-links">
+        <!-- Each <li> (list item) represents one link in the navbar -->
         <li>
+          <!-- The "active" class gives this link a distinct look indicating we are currently on this page -->
           <a href="dashboard.html" class="nav-link active">
             <i class="fa-solid fa-chart-pie"></i> Dashboard
           </a>
@@ -38,6 +58,8 @@
           </a>
         </li>
         <li>
+          <!-- A special logout button that links back to the login page -->
+          <!-- The "logout-btn" class gives it a red color scheme -->
           <a href="login.html" class="nav-link logout-btn">
             <i class="fa-solid fa-power-off"></i> Logout
           </a>
@@ -46,27 +68,43 @@
     </nav>
   </header>
 
-  <!-- Main Content Area -->
+  <!-- ========================================== -->
+  <!-- MAIN CONTENT WRAPPER                       -->
+  <!-- ========================================== -->
+  <!-- This <div> wraps the main content and centers it on the screen with a max width (defined in CSS) -->
   <div class="app-container">
+    <!-- <main> holds the primary content of the dashboard -->
     <main class="content-area">
 
-      <!-- Welcome Hero Section -->
+      <!-- ========================================== -->
+      <!-- WELCOME HERO SECTION                       -->
+      <!-- ========================================== -->
+      <!-- A <section> tag to group the welcome header elements -->
       <section class="welcome-header">
         <div class="welcome-text">
+          <!-- The main headline of the dashboard -->
           <h1>Welcome back, Alex! <span style="font-size: 1.5rem;">👋</span></h1>
+          <!-- A subtitle providing context -->
           <p>Here is your real-time financial overview and cash flow breakdown for July 2026.</p>
         </div>
+        
+        <!-- A badge on the right displaying the current date and fiscal period -->
         <div class="date-badge">
           <i class="fa-regular fa-calendar-check"></i>
           <span>July 27, 2026 • Q3 Fiscal Period</span>
         </div>
       </section>
 
-      <!-- Financial Summary Cards -->
+      <!-- ========================================== -->
+      <!-- FINANCIAL SUMMARY CARDS GRID               -->
+      <!-- ========================================== -->
+      <!-- A <section> that acts as a CSS Grid container to display our 3 summary cards side-by-side -->
       <section class="summary-grid">
         
-        <!-- Total Balance Card -->
+        <!-- --- CARD 1: Total Balance --- -->
+        <!-- <article> is used for an independent, self-contained widget or block of content -->
         <article class="summary-card balance-card">
+          <!-- Top area of the card with label and icon -->
           <div>
             <div class="card-top">
               <span class="card-label">Total Net Balance</span>
@@ -74,8 +112,10 @@
                 <i class="fa-solid fa-wallet"></i>
               </div>
             </div>
+            <!-- The large financial number displayed on the card -->
             <div class="card-value">$12,450.80</div>
           </div>
+          <!-- Bottom area of the card showing the trend compared to last month -->
           <div class="card-footer-trend">
             <span class="trend-badge">
               <i class="fa-solid fa-arrow-trend-up"></i> +14.2%
@@ -84,7 +124,7 @@
           </div>
         </article>
 
-        <!-- Total Income Card -->
+        <!-- --- CARD 2: Total Income --- -->
         <article class="summary-card income-card">
           <div>
             <div class="card-top">
@@ -96,6 +136,7 @@
             <div class="card-value">$18,200.00</div>
           </div>
           <div class="card-footer-trend">
+            <!-- trend-up class colors this badge green -->
             <span class="trend-badge trend-up">
               <i class="fa-solid fa-arrow-up"></i> +8.5%
             </span>
@@ -103,7 +144,7 @@
           </div>
         </article>
 
-        <!-- Total Expenses Card -->
+        <!-- --- CARD 3: Total Expenses --- -->
         <article class="summary-card expense-card">
           <div>
             <div class="card-top">
@@ -115,6 +156,7 @@
             <div class="card-value">$5,749.20</div>
           </div>
           <div class="card-footer-trend">
+            <!-- trend-down class colors this badge red -->
             <span class="trend-badge trend-down">
               <i class="fa-solid fa-arrow-down"></i> -2.4%
             </span>
@@ -124,45 +166,61 @@
 
       </section>
 
-      <!-- Recent Transactions Section -->
+      <!-- ========================================== -->
+      <!-- RECENT TRANSACTIONS TABLE SECTION          -->
+      <!-- ========================================== -->
       <section>
+        <!-- The header above the table with title and action buttons -->
         <div class="section-header">
           <div class="section-title">
             <i class="fa-solid fa-arrow-right-arrow-left"></i>
             <h2>Recent Transactions</h2>
           </div>
+          <!-- Buttons aligned to the right side of the section header -->
           <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+            <!-- Secondary button linking to the history page -->
             <a href="history.html" class="btn btn-secondary">
               <i class="fa-solid fa-list-ul"></i> View All History
             </a>
+            <!-- Primary colored button linking to the add transaction page -->
             <a href="add.html" class="btn btn-primary">
               <i class="fa-solid fa-plus"></i> Add New Transaction
             </a>
           </div>
         </div>
 
-        <!-- 5 Sample Transactions Table -->
+        <!-- The container holding the actual table. It gives rounded corners and a white background -->
         <div class="table-container">
+          <!-- The <table> element is used to display tabular data (rows and columns) -->
           <table class="data-table">
+            
+            <!-- <thead> defines the header row of the table -->
             <thead>
+              <!-- <tr> stands for Table Row -->
               <tr>
+                <!-- <th> stands for Table Header, representing column titles -->
                 <th>Date</th>
                 <th>Category</th>
                 <th>Description</th>
                 <th>Type</th>
+                <!-- Inline style aligns the amount text to the right side -->
                 <th style="text-align: right;">Amount</th>
               </tr>
             </thead>
+            
+            <!-- <tbody> contains the main data rows of the table -->
             <tbody>
               
-              <!-- Transaction 1 -->
+              <!-- === TRANSACTION ROW 1 === -->
               <tr>
+                <!-- <td> stands for Table Data (a single cell in the row) -->
                 <td class="cell-date">
                   <i class="fa-regular fa-clock" style="color: var(--text-light); margin-right: 6px;"></i>
                   July 26, 2026
                 </td>
                 <td>
                   <div class="cell-category">
+                    <!-- Icon specific to this category (Groceries) -->
                     <div class="category-icon" style="color: #059669; background-color: #ecfdf5;">
                       <i class="fa-solid fa-cart-shopping"></i>
                     </div>
@@ -171,14 +229,16 @@
                 </td>
                 <td class="cell-desc">Whole Foods Market - Organic Produce & Household Supplies</td>
                 <td>
+                  <!-- A styled badge indicating this is an Expense (red) -->
                   <span class="type-badge badge-expense">
                     <i class="fa-solid fa-arrow-down-long"></i> Expense
                   </span>
                 </td>
+                <!-- The amount value, styled red to indicate money leaving the account -->
                 <td class="cell-amount amount-expense">-$145.20</td>
               </tr>
 
-              <!-- Transaction 2 -->
+              <!-- === TRANSACTION ROW 2 === -->
               <tr>
                 <td class="cell-date">
                   <i class="fa-regular fa-clock" style="color: var(--text-light); margin-right: 6px;"></i>
@@ -194,14 +254,16 @@
                 </td>
                 <td class="cell-desc">Apple Tech Inc. - Monthly Engineering Salary Deposit (Net)</td>
                 <td>
+                  <!-- A styled badge indicating this is Income (green) -->
                   <span class="type-badge badge-income">
                     <i class="fa-solid fa-arrow-up-long"></i> Income
                   </span>
                 </td>
+                <!-- The amount value, styled green to indicate money entering the account -->
                 <td class="cell-amount amount-income">+$5,400.00</td>
               </tr>
 
-              <!-- Transaction 3 -->
+              <!-- === TRANSACTION ROW 3 === -->
               <tr>
                 <td class="cell-date">
                   <i class="fa-regular fa-clock" style="color: var(--text-light); margin-right: 6px;"></i>
@@ -224,7 +286,7 @@
                 <td class="cell-amount amount-expense">-$89.50</td>
               </tr>
 
-              <!-- Transaction 4 -->
+              <!-- === TRANSACTION ROW 4 === -->
               <tr>
                 <td class="cell-date">
                   <i class="fa-regular fa-clock" style="color: var(--text-light); margin-right: 6px;"></i>
@@ -247,7 +309,7 @@
                 <td class="cell-amount amount-income">+$1,850.00</td>
               </tr>
 
-              <!-- Transaction 5 -->
+              <!-- === TRANSACTION ROW 5 === -->
               <tr>
                 <td class="cell-date">
                   <i class="fa-regular fa-clock" style="color: var(--text-light); margin-right: 6px;"></i>
@@ -278,11 +340,16 @@
     </main>
   </div>
 
-  <!-- Footer -->
+  <!-- ========================================== -->
+  <!-- FOOTER SECTION                             -->
+  <!-- ========================================== -->
+  <!-- The <footer> appears at the very bottom of the dashboard -->
   <footer class="app-footer">
     <div class="app-container">
       <div class="footer-content">
+        <!-- Copyright text -->
         <p>&copy; 2026 Smart Expense Tracker. Static HTML5 & CSS3 Architecture.</p>
+        <!-- Footer navigation links -->
         <div class="footer-links">
           <a href="dashboard.html">Privacy Policy</a>
           <a href="dashboard.html">Terms of Service</a>

@@ -1,42 +1,63 @@
+<!-- The document type declaration tells the browser this is an HTML5 document. -->
 <!DOCTYPE html>
+<!-- The html tag is the root element of the HTML page. lang="en" specifies English as the language. -->
 <html lang="en">
+<!-- The head section contains meta-information about the HTML page, like title and links to CSS. -->
 <head>
+  <!-- Specifies the character encoding for the document (UTF-8 handles almost all characters/symbols). -->
   <meta charset="UTF-8">
+  <!-- Makes the web page responsive, adapting its layout to the width of the device screen (like mobile phones). -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- The title of the page, which appears in the browser tab. -->
   <title>Add Transaction - Smart Expense Tracker</title>
+  
   <!-- Font Awesome Icons via CDN -->
+  <!-- This link tag imports external CSS from Font Awesome, giving us access to hundreds of free icons. -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <!-- Shared Stylesheet -->
+  <!-- This links to our own custom CSS file (style.css) which defines how our page looks (colors, layout, etc.). -->
   <link rel="stylesheet" href="style.css">
 </head>
+<!-- The body contains all the visible content of the webpage. -->
 <body>
 
   <!-- Top Navigation Bar -->
+  <!-- The header tag semantically defines a header for the document. class="top-navbar" is for styling. -->
   <header class="top-navbar">
+    <!-- The nav tag defines a set of navigation links. -->
     <nav class="navbar-content">
+      <!-- The logo and brand name that acts as a home button, linking back to the dashboard. -->
       <a href="dashboard.html" class="brand-logo">
         <div class="brand-icon-wrapper">
+          <!-- An icon of a vault from Font Awesome. -->
           <i class="fa-solid fa-vault"></i>
         </div>
+        <!-- The brand name text. It includes a smaller nested element for the subtitle. -->
         <span>SmartVault <small style="font-size: 0.65em; font-weight: 500; color: var(--primary-light); display: block; margin-top: -4px;">FINANCIAL TRACKER</small></span>
       </a>
 
+      <!-- An unordered list (ul) used to group the navigation links. -->
       <ul class="nav-links">
+        <!-- List item for the Dashboard link -->
         <li>
           <a href="dashboard.html" class="nav-link">
             <i class="fa-solid fa-chart-pie"></i> Dashboard
           </a>
         </li>
+        <!-- List item for the Add Transaction link. It has the 'active' class to show we are currently on this page. -->
         <li>
           <a href="add.html" class="nav-link active">
             <i class="fa-solid fa-circle-plus"></i> Add Transaction
           </a>
         </li>
+        <!-- List item for the History link -->
         <li>
           <a href="history.html" class="nav-link">
             <i class="fa-solid fa-clock-rotate-left"></i> History
           </a>
         </li>
+        <!-- List item for the Logout link -->
         <li>
           <a href="login.html" class="nav-link logout-btn">
             <i class="fa-solid fa-power-off"></i> Logout
@@ -47,46 +68,63 @@
   </header>
 
   <!-- Main Content Area -->
+  <!-- A wrapper div to center or constrain the width of the main content on the screen. -->
   <div class="app-container">
+    <!-- The main tag specifies the main content of the document. -->
     <main class="content-area">
 
       <!-- Section Header -->
+      <!-- A section tag for grouping the header content of this page. -->
       <section class="section-header" style="max-width: 680px; margin: 0 auto 24px auto;">
         <div class="section-title">
+          <!-- Icon representing an invoice/dollar. -->
           <i class="fa-solid fa-file-invoice-dollar"></i>
           <div>
+            <!-- Page heading -->
             <h2>Record New Transaction</h2>
+            <!-- A small description paragraph under the heading. -->
             <p style="font-size: 0.9rem; color: var(--text-muted); font-weight: 400; margin-top: 4px;">
               Enter the financial details below. Form fields use HTML5 native validation.
             </p>
           </div>
         </div>
+        <!-- A button-styled link to cancel and go back to the dashboard. -->
         <a href="dashboard.html" class="btn btn-secondary">
           <i class="fa-solid fa-xmark"></i> Cancel
         </a>
       </section>
 
       <!-- Add Transaction Form Card -->
+      <!-- This section acts as a visual card containing the form elements. -->
       <section class="form-card">
         
+        <!-- The form element collects user input. On submission, it sends data to dashboard.html via the GET method. -->
         <form action="dashboard.html" method="get">
           
           <!-- Type Selection: Income vs Expense -->
+          <!-- A group for the radio buttons to select transaction type. -->
           <div class="form-group">
+            <!-- Label for the type selector -->
             <label class="form-label">
               Transaction Type <span class="required">*</span>
             </label>
+            <!-- Container for the custom styled radio buttons -->
             <div class="type-selector">
               
+              <!-- Option for Expense -->
               <div class="type-option">
+                <!-- Radio input for Expense. Checked by default. 'required' means form can't be submitted without selection. -->
                 <input type="radio" id="type-expense" name="transaction_type" value="expense" checked required>
+                <!-- Label for the expense radio button, used for styling the clickable area. -->
                 <label for="type-expense" class="type-label">
                   <i class="fa-solid fa-circle-arrow-down"></i>
                   <span>Expense (Outflow)</span>
                 </label>
               </div>
 
+              <!-- Option for Income -->
               <div class="type-option">
+                <!-- Radio input for Income. Shares the same 'name' as Expense, so only one can be selected. -->
                 <input type="radio" id="type-income" name="transaction_type" value="income" required>
                 <label for="type-income" class="type-label">
                   <i class="fa-solid fa-circle-arrow-up"></i>
@@ -95,16 +133,21 @@
               </div>
 
             </div>
+            <!-- Helper text explaining this field to the user -->
             <span class="form-helper-text">Select whether this transaction is outgoing spend or incoming revenue.</span>
           </div>
 
           <!-- Amount Input -->
           <div class="form-group">
+            <!-- Label for the amount input field -->
             <label for="amount" class="form-label">
               Amount ($ USD) <span class="required">*</span>
             </label>
+            <!-- Wrapper to position the dollar sign inside the input field -->
             <div style="position: relative;">
+              <!-- The dollar sign placed absolutely over the input field. -->
               <span style="position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-weight: 700; color: var(--text-muted);">$</span>
+              <!-- Number input field for the amount. 'step="0.01"' allows decimals (cents). 'min="0.01"' prevents zero or negative amounts. -->
               <input 
                 type="number" 
                 id="amount" 
@@ -125,8 +168,12 @@
             <label for="category" class="form-label">
               Category <span class="required">*</span>
             </label>
+            <!-- Select element creates a dropdown list. 'required' means an option must be chosen. -->
             <select id="category" name="category" class="form-control" required style="cursor: pointer;">
+              <!-- Default placeholder option. 'disabled selected' means it shows first but cannot be chosen as a valid value. -->
               <option value="" disabled selected>-- Choose Category --</option>
+              
+              <!-- Option group for Expenses. Groups related options visually. -->
               <optgroup label="Expense Categories">
                 <option value="groceries">🛒 Groceries & Pantry</option>
                 <option value="housing">🏠 Housing, Rent & Mortgage</option>
@@ -138,6 +185,8 @@
                 <option value="shopping">🛍️ Retail & Personal Shopping</option>
                 <option value="entertainment">🎬 Entertainment & Leisure</option>
               </optgroup>
+              
+              <!-- Option group for Income -->
               <optgroup label="Income Categories">
                 <option value="salary">💼 Salary & Compensation</option>
                 <option value="freelance">💻 Freelance & Consulting</option>
@@ -154,6 +203,7 @@
             <label for="date" class="form-label">
               Transaction Date <span class="required">*</span>
             </label>
+            <!-- Date input field. Shows a date picker calendar in supported browsers. -->
             <input 
               type="date" 
               id="date" 
@@ -170,6 +220,7 @@
             <label for="description" class="form-label">
               Description & Notes <span class="required">*</span>
             </label>
+            <!-- Text input field for short descriptions. 'minlength="3"' requires at least 3 characters. -->
             <input 
               type="text" 
               id="description" 
@@ -183,10 +234,13 @@
           </div>
 
           <!-- Form Actions -->
+          <!-- Container for the cancel and submit buttons at the bottom of the form. -->
           <div class="form-actions">
+            <!-- Cancel button (acts as a link to dashboard) -->
             <a href="dashboard.html" class="btn btn-secondary">
               <i class="fa-solid fa-ban"></i> Cancel
             </a>
+            <!-- Submit button. Clicking this triggers HTML form submission and validation. -->
             <button type="submit" class="btn btn-primary">
               <i class="fa-solid fa-check-circle"></i> Save Transaction
             </button>
@@ -200,10 +254,14 @@
   </div>
 
   <!-- Footer -->
+  <!-- The footer section of the page, usually contains copyright and links. -->
   <footer class="app-footer">
+    <!-- Container to align footer content with the main app layout -->
     <div class="app-container">
       <div class="footer-content">
+        <!-- Copyright text -->
         <p>&copy; 2026 Smart Expense Tracker. Static HTML5 & CSS3 Architecture.</p>
+        <!-- Footer navigation links -->
         <div class="footer-links">
           <a href="dashboard.html">Privacy Policy</a>
           <a href="dashboard.html">Terms of Service</a>

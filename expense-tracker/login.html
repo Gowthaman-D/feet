@@ -1,33 +1,60 @@
 <!DOCTYPE html>
+<!-- The <html> tag is the root element of the HTML page. The lang="en" attribute specifies the language as English -->
 <html lang="en">
+<!-- The <head> section contains metadata, title, and links to external resources like stylesheets. It is not visible on the webpage itself. -->
 <head>
+  <!-- <meta charset="UTF-8"> sets the character encoding to UTF-8, which supports most characters and symbols from all languages -->
   <meta charset="UTF-8">
+  <!-- The viewport meta tag ensures the webpage looks good on all devices (mobile, tablet, desktop) by controlling width and scaling -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- The <title> sets the name of the tab in the web browser -->
   <title>Sign In - Smart Expense Tracker</title>
-  <!-- Font Awesome Icons via CDN -->
+  
+  <!-- This <link> tag connects the page to Font Awesome, an external library we use to display icons (like the vault icon) -->
+  <!-- We use a CDN (Content Delivery Network) URL to load it quickly -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Shared Stylesheet -->
+  
+  <!-- This <link> tag connects our custom stylesheet (style.css) which contains all our design and layout rules -->
   <link rel="stylesheet" href="style.css">
 </head>
+<!-- The <body> tag contains all the visible content of the webpage. We give it a class "login-page" to apply specific background styles from our CSS -->
 <body class="login-page">
 
+  <!-- <main> is a semantic tag representing the main content of this document. It acts as the white card holding our login form -->
   <main class="login-card">
+    
+    <!-- <header> represents the introductory content inside our login card -->
     <header class="login-header">
+      <!-- A <div> (divider) container for our logo icon -->
       <div class="login-logo">
+        <!-- The <i> tag with these specific classes tells Font Awesome to insert a vault icon here -->
         <i class="fa-solid fa-vault"></i>
       </div>
+      <!-- <h1> is the main heading. It's the largest text in this section -->
       <h1>Welcome Back</h1>
+      <!-- <p> stands for paragraph, used here for a short subtitle -->
       <p>Sign in to access your Smart Expense Tracker</p>
     </header>
 
-    <!-- Form submits directly to dashboard.html using standard HTML5 action -->
+    <!-- The <form> element collects user input. 
+         action="dashboard.html" means when submitted, it will redirect to the dashboard page.
+         method="get" defines how data is sent (not ideal for real passwords, but fine for this static demo). -->
     <form action="dashboard.html" method="get" class="login-form">
       
+      <!-- This <div> wraps the first input field (Email) to group the label, input, and helper text together -->
       <div class="form-group">
+        <!-- The <label> tells the user what this field is for. for="email" links it to the input with id="email" -->
         <label for="email" class="form-label">
-          Email Address <span class="required">*</span>
+          Email Address 
+          <!-- A <span> is used to color the asterisk red, indicating the field is required -->
+          <span class="required">*</span>
         </label>
+        
+        <!-- A wrapper div with relative positioning so we can add absolute positioned elements (like validation icons) later if needed -->
         <div style="position: relative;">
+          <!-- The <input> element where the user types their email. 
+               type="email" ensures mobile keyboards show the '@' symbol and browsers validate email format.
+               required makes it mandatory to fill before submitting. -->
           <input 
             type="email" 
             id="email" 
@@ -36,16 +63,20 @@
             placeholder="Enter your email" 
             required 
             autocomplete="email" 
-                     >
+          >
+          <!-- Small helper text below the input field -->
           <span class="form-helper-text">We'll never share your financial details with anyone else.</span>
         </div>
       </div>
 
+      <!-- This <div> wraps the second input field (Password) -->
       <div class="form-group">
         <label for="password" class="form-label">
           Password <span class="required">*</span>
         </label>
         <div style="position: relative;">
+          <!-- type="password" hides the characters as the user types them for security.
+               minlength, maxlength, and pattern provide strict rules on what a valid password looks like. -->
           <input 
             type="password" 
             id="password" 
@@ -62,26 +93,39 @@
         </div>
       </div>
 
+      <!-- A <div> containing "Remember this device" checkbox and "Forgot Password" link arranged horizontally using flexbox -->
       <div class="form-group" style="display: flex; align-items: center; justify-content: space-between; margin-top: 16px; font-size: 0.875rem;">
+        <!-- Label wrapping the checkbox so clicking the text also toggles the checkbox -->
         <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; color: var(--text-secondary);">
+          <!-- A checkbox input that defaults to checked -->
           <input type="checkbox" checked style="width: 16px; height: 16px; accent-color: var(--primary-blue);">
           Remember this device
         </label>
+        <!-- An <a> (anchor) tag creating a link to the dashboard (used here as a dummy forgot password link) -->
         <a href="dashboard.html" style="font-weight: 600;">Forgot Password?</a>
       </div>
 
+      <!-- Wrapper for the submit button adding some top margin -->
       <div style="margin-top: 28px;">
+        <!-- The <button> to submit the form. type="submit" triggers the form's action. -->
         <button type="submit" class="btn btn-primary btn-block btn-lg">
+          <!-- Icon inside the button -->
           <i class="fa-solid fa-right-to-bracket"></i> Sign In to Dashboard
         </button>
       </div>
 
     </form>
 
+    <!-- <footer> represents the bottom section of the login card -->
     <footer class="login-footer">
+      <!-- Paragraph with a link for users who don't have an account -->
       <p>Don't have a banking account yet? <a href="dashboard.html">Create Account</a></p>
+      
+      <!-- Small text links for Privacy Policy and Terms at the very bottom -->
       <div style="margin-top: 16px; font-size: 0.75rem; color: var(--text-light); display: flex; justify-content: center; gap: 12px;">
-        
+        <a href="dashboard.html" style="color: var(--text-light); text-decoration: none;">Privacy Policy</a>
+        <span>|</span>
+        <a href="dashboard.html" style="color: var(--text-light); text-decoration: none;">Terms of Service</a>
       </div>
     </footer>
   </main>

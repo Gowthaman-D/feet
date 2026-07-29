@@ -1,103 +1,145 @@
 <!DOCTYPE html>
+<!-- The html tag wraps all content. lang="en" sets the language to English -->
 <html lang="en">
 <head>
+  <!-- Character encoding for the document (UTF-8 handles most characters) -->
   <meta charset="UTF-8">
+  <!-- Viewport meta tag ensures the page is responsive on mobile devices -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Title appears in the browser tab -->
   <title>Basic Expense Tracker</title>
+  
+  <!-- CSS styles start here -->
   <style>
+    /* Styles for the whole page (body) */
     body { 
-      font-family: Arial, sans-serif; 
-      max-width: 600px; 
-      margin: 2rem auto; 
-      padding: 0 1rem; 
-      color: #333; 
+      font-family: Arial, sans-serif; /* Sets the font */
+      max-width: 600px; /* Restricts maximum width to 600px */
+      margin: 2rem auto; /* Centers the content horizontally and adds top/bottom margin */
+      padding: 0 1rem; /* Adds some spacing on the left and right */
+      color: #333; /* Dark gray text color */
     }
+    
+    /* Styles for the main heading (h1) */
     h1 { 
-      text-align: center; 
-      color: #0056b3; 
+      text-align: center; /* Centers the heading text */
+      color: #0056b3; /* A nice shade of blue */
     }
+    
+    /* Styles for the "card" containers */
     .card { 
-      border: 1px solid #ccc; 
-      padding: 1rem; 
-      border-radius: 8px; 
-      background: #fff; 
-      margin-bottom: 1rem; 
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      border: 1px solid #ccc; /* Light gray border */
+      padding: 1rem; /* Spacing inside the card */
+      border-radius: 8px; /* Rounded corners */
+      background: #fff; /* White background */
+      margin-bottom: 1rem; /* Spacing below the card */
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Very subtle shadow for depth */
     }
+    
+    /* Styles for the form element */
     form { 
-      display: flex; 
-      gap: 0.5rem; 
-      flex-wrap: wrap; 
-      margin-bottom: 0.5rem; 
+      display: flex; /* Uses Flexbox to align items horizontally */
+      gap: 0.5rem; /* Space between form elements */
+      flex-wrap: wrap; /* Allows wrapping to the next line on small screens */
+      margin-bottom: 0.5rem; /* Space below the form */
     }
+    
+    /* Shared styles for inputs and buttons */
     input, button { 
-      padding: 0.5rem; 
-      border: 1px solid #ccc; 
-      border-radius: 4px; 
-      font-size: 1rem;
+      padding: 0.5rem; /* Inner spacing */
+      border: 1px solid #ccc; /* Light gray border */
+      border-radius: 4px; /* Slightly rounded corners */
+      font-size: 1rem; /* Normal font size */
     }
+    
+    /* Specific styles for input fields */
     input { 
-      flex: 1; 
-      min-width: 120px; 
+      flex: 1; /* Makes inputs grow to fill available space */
+      min-width: 120px; /* Minimum width before wrapping */
     }
+    
+    /* Specific styles for buttons */
     button { 
-      background: #0056b3; 
-      color: white; 
-      border: none; 
-      cursor: pointer; 
-      font-weight: bold;
+      background: #0056b3; /* Blue background */
+      color: white; /* White text */
+      border: none; /* Removes default border */
+      cursor: pointer; /* Shows hand cursor on hover */
+      font-weight: bold; /* Bold text */
     }
+    
+    /* Hover effect for buttons */
     button:hover { 
-      background: #004494; 
+      background: #004494; /* Darker blue when hovered */
     }
+    
+    /* Styles for the expense table */
     table { 
-      width: 100%; 
-      border-collapse: collapse; 
+      width: 100%; /* Table takes full width */
+      border-collapse: collapse; /* Removes double borders between cells */
     }
+    
+    /* Styles for table headers and cells */
     th, td { 
-      padding: 0.5rem; 
-      border-bottom: 1px solid #eee; 
-      text-align: left; 
+      padding: 0.5rem; /* Inner spacing */
+      border-bottom: 1px solid #eee; /* Light line below each row */
+      text-align: left; /* Aligns text to the left */
     }
+    
+    /* Specific styles for table headers */
     th {
-      background-color: #f8f9fa;
-      color: #555;
+      background-color: #f8f9fa; /* Very light gray background */
+      color: #555; /* Medium gray text */
     }
+    
+    /* Styles for the delete button */
     .delete-btn { 
-      background: #dc3545; 
-      color: white; 
-      padding: 0.2rem 0.5rem; 
-      font-size: 0.8rem;
+      background: #dc3545; /* Red background for delete action */
+      color: white; /* White text */
+      padding: 0.2rem 0.5rem; /* Smaller padding */
+      font-size: 0.8rem; /* Smaller text */
     }
+    
+    /* Hover effect for delete button */
     .delete-btn:hover { 
-      background: #c82333; 
+      background: #c82333; /* Darker red on hover */
     }
+    
+    /* Styles for the total amount display */
     .total-section { 
-      font-size: 1.2rem; 
-      font-weight: bold; 
-      text-align: right; 
-      margin-top: 1rem; 
-      padding-top: 1rem;
-      border-top: 2px solid #eee;
+      font-size: 1.2rem; /* Larger text */
+      font-weight: bold; /* Bold text */
+      text-align: right; /* Aligns text to the right */
+      margin-top: 1rem; /* Space above */
+      padding-top: 1rem; /* Inner space above text */
+      border-top: 2px solid #eee; /* Thicker light line above */
     }
   </style>
 </head>
 <body>
 
+  <!-- Main heading of the page -->
   <h1>Expense Tracker</h1>
 
+  <!-- First card containing the form to add an expense -->
   <div class="card">
     <form id="tracker-form">
+      <!-- Input for the description of the expense -->
       <input type="text" id="desc" placeholder="Description" required>
+      <!-- Input for the amount (allows decimals with step="0.01") -->
       <input type="number" id="amount" placeholder="Amount ($)" step="0.01" required>
+      <!-- Input for the date -->
       <input type="date" id="date" required>
+      <!-- Submit button to add the expense -->
       <button type="submit">Add</button>
     </form>
   </div>
 
+  <!-- Second card containing the list of expenses and the total -->
   <div class="card">
+    <!-- Table structure for expenses -->
     <table>
       <thead>
+        <!-- Table header row -->
         <tr>
           <th>Date</th>
           <th>Description</th>
@@ -105,59 +147,88 @@
           <th>Action</th>
         </tr>
       </thead>
+      <!-- Empty table body where expenses will be injected by JavaScript -->
       <tbody id="expense-list"></tbody>
     </table>
+    <!-- Section displaying the total sum of all expenses -->
     <div class="total-section">
       Total: $<span id="total-amount">0.00</span>
     </div>
   </div>
 
+  <!-- JavaScript logic starts here -->
   <script>
-    // Minimal JavaScript to handle form submission and local storage
+    // Load existing expenses from local storage (saved data in the browser)
+    // If there is no saved data, initialize an empty array []
     let expenses = JSON.parse(localStorage.getItem('basic_expenses')) || [];
     
-    // Set default date to today
+    // Get today's date in YYYY-MM-DD format
+    // 'new Date().toISOString()' gives a string like "2023-10-25T14:30:00Z"
+    // 'split('T')[0]' takes only the part before the 'T'
     document.getElementById('date').value = new Date().toISOString().split('T')[0];
     
-    // Handle form submission
+    // Listen for the form submission (when the user clicks "Add" or presses Enter)
     document.getElementById('tracker-form').addEventListener('submit', function(e) {
+      // Prevent the default form submission behavior (which would refresh the page)
       e.preventDefault();
       
+      // Create a new expense object with the data from the form
       const newExpense = {
-        id: Date.now(),
-        desc: document.getElementById('desc').value,
-        amount: parseFloat(document.getElementById('amount').value),
-        date: document.getElementById('date').value
+        id: Date.now(), // Use the current time (in milliseconds) as a unique ID
+        desc: document.getElementById('desc').value, // Get description text
+        amount: parseFloat(document.getElementById('amount').value), // Convert amount string to a number
+        date: document.getElementById('date').value // Get date text
       };
       
+      // Add the new expense to our list of expenses
       expenses.push(newExpense);
+      
+      // Save the updated list back to the browser's local storage so it persists after a reload
       localStorage.setItem('basic_expenses', JSON.stringify(expenses));
       
-      // Reset text and number inputs only
+      // Clear the text and amount input fields so the user can easily add another expense
       document.getElementById('desc').value = '';
       document.getElementById('amount').value = '';
       
+      // Update the user interface to show the new expense and new total
       render();
     });
 
-    // Handle deletion
+    // Function to delete an expense given its unique ID
     function deleteExp(id) {
+      // Keep only expenses whose ID does NOT match the one passed to the function
       expenses = expenses.filter(e => e.id !== id);
+      
+      // Save the new, filtered list back to local storage
       localStorage.setItem('basic_expenses', JSON.stringify(expenses));
+      
+      // Re-render the interface to remove the deleted expense from the table
       render();
     }
 
-    // Render table and calculate total
+    // Function to update the HTML table and the total amount on the screen
     function render() {
+      // Find the table body where expense rows will be placed
       const list = document.getElementById('expense-list');
+      
+      // Clear anything currently in the list
       list.innerHTML = '';
+      
+      // Start the total amount calculation at 0
       let total = 0;
       
+      // Check if there are no expenses to show
       if (expenses.length === 0) {
+        // Show a helpful placeholder message if the list is empty
         list.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#999;">No expenses yet. Add one above!</td></tr>';
       } else {
+        // Loop through each expense in our array
         expenses.forEach(exp => {
+          // Add this expense's amount to our running total
           total += exp.amount;
+          
+          // Create an HTML row for this expense and append it to the list
+          // We format the amount to exactly 2 decimal places using 'toFixed(2)'
           list.innerHTML += `
             <tr>
               <td>${exp.date}</td>
@@ -169,10 +240,11 @@
         });
       }
       
+      // Finally, update the text of the total amount display with the final calculated total
       document.getElementById('total-amount').innerText = total.toFixed(2);
     }
 
-    // Initial render
+    // Call render once right after the page loads to display any previously saved expenses
     render();
   </script>
 </body>
