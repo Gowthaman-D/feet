@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexTrack - White & Blue Expense Dashboard</title>
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Configuration for Custom Colors & Animations -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        },
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        }
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s ease-out',
+                        'slide-up': 'slideUp 0.4s ease-out',
+                        'slide-in-right': 'slideInRight 0.3s ease-out'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideInRight: {
+                            '0%': { opacity: '0', transform: 'translateX(20px)' },
+                            '100%': { opacity: '1', transform: 'translateX(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+
+        /* Glassmorphism utility classes */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
+        }
+        
+        .glass-input {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            color: #1e293b;
+        }
+        
+        .glass-input:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+            outline: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen font-sans antialiased overflow-x-hidden selection:bg-brand-500 selection:text-white">
+
+    <!-- Background Gradient Orbs (Subtle Light Mode) -->
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-brand-500/10 blur-[120px]"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-cyan-500/10 blur-[120px]"></div>
+    </div>
+
+    <!-- Toast Notification Container -->
+    <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2"></div>
+
+    <!-- ==========================================
+         AUTHENTICATION GATE
+         ========================================== -->
+    <div id="auth-view" class="relative z-10 flex min-h-screen items-center justify-center p-4 transition-opacity duration-500">
+        <div class="glass-panel w-full max-w-md rounded-2xl p-8 animate-slide-up shadow-xl">
+            <div class="flex justify-center mb-6">
+                <div class="h-14 w-14 rounded-xl bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center shadow-lg shadow-brand-500/30">
+                    <i data-lucide="wallet" class="text-white h-7 w-7"></i>
+                </div>
+            </div>
+            
+            <h2 class="text-2xl font-bold text-center text-slate-900 mb-2" id="auth-title">Welcome to NexTrack</h2>
+            <p class="text-slate-500 text-center mb-8 text-sm">Securely manage your expenses</p>
+
+            <form id="auth-form" class="space-y-5">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Email Address</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i data-lucide="mail" class="h-5 w-5 text-slate-400"></i>
+                        </div>
+                        <input type="email" id="email" required class="glass-input w-full pl-10 pr-4 py-2.5 rounded-lg transition-all" placeholder="name@example.com" value="user@nextrack.io">
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-slate-700 mb-1.5">Password</label>
+                    <div class="relative">
+                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                            <i data-lucide="lock" class="h-5 w-5 text-slate-400"></i>
+                        </div>
+                        <input type="password" id="password" required class="glass-input w-full pl-10 pr-4 py-2.5 rounded-lg transition-all" placeholder="••••••••" value="password123">
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-2.5 px-4 bg-gradient-to-r from-brand-600 to-brand-500 hover:from-brand-700 hover:to-brand-600 text-white font-semibold rounded-lg shadow-md transition-all transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 mt-2">
+                    Access Dashboard
+                </button>
+            </form>
+            
+            <div class="mt-6 text-center text-sm text-slate-500">
+                <p>Test credentials are pre-filled.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         DASHBOARD APP VIEW
+         ========================================== -->
+    <div id="app-view" class="relative z-10 hidden min-h-screen flex-col animate-fade-in">
+        
+        <!-- Header / Nav -->
+        <header class="glass-panel border-b border-slate-200 sticky top-0 z-40 bg-white/80">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 flex items-center justify-center shadow-sm">
+                        <i data-lucide="wallet" class="text-white h-4 w-4"></i>
+                    </div>
+                    <h1 class="text-lg font-bold text-brand-900 tracking-wide">NexTrack</h1>
+                </div>
+                
+                <div class="flex items-center gap-4">
+                    <div class="hidden sm:flex items-center gap-2 text-sm text-slate-600 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">
+                        <div class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                        <span id="user-greeting" class="font-medium">Hello, User</span>
+                    </div>
+                    <button id="logout-btn" class="p-2 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors" title="Sign Out">
+                        <i data-lucide="log-out" class="h-5 w-5"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content Grid -->
+        <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            
+            <!-- Welcome Row -->
+            <div class="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900 mb-1">Financial Overview</h2>
+                    <p class="text-slate-500 text-sm">Track and manage your expenses seamlessly.</p>
+                </div>
+                <div class="flex gap-2">
+                    <button id="export-btn" class="px-4 py-2 bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 rounded-lg text-sm font-semibold shadow-sm transition-colors flex items-center gap-2">
+                        <i data-lucide="download" class="h-4 w-4"></i> Export CSV
+                    </button>
+                </div>
+            </div>
+
+            <!-- Metrics Overview Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                
+                <!-- Metric 1: Total Expenses -->
+                <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group border-t-4 border-t-rose-500">
+                    <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <i data-lucide="trending-down" class="h-24 w-24 text-rose-600 transform rotate-12"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <p class="text-slate-500 text-sm font-semibold mb-1 uppercase tracking-wider">Total Expenses</p>
+                        <h3 class="text-3xl font-bold text-slate-900 tracking-tight" id="metric-total">$0.00</h3>
+                        <div class="mt-4 flex items-center text-xs text-rose-600 font-bold">
+                            <i data-lucide="arrow-up-right" class="h-3 w-3 mr-1"></i> Lifetime Tracked
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Metric 2: Monthly Aggregate -->
+                <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group border-t-4 border-t-brand-500">
+                    <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <i data-lucide="calendar" class="h-24 w-24 text-brand-600 transform rotate-12"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <p class="text-slate-500 text-sm font-semibold mb-1 uppercase tracking-wider">Current Month</p>
+                        <h3 class="text-3xl font-bold text-slate-900 tracking-tight" id="metric-monthly">$0.00</h3>
+                        <div class="mt-4 flex items-center text-xs text-slate-500 font-bold" id="current-month-label">
+                            <i data-lucide="clock" class="h-3 w-3 mr-1"></i> Based on 30 days
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Metric 3: Active Categories -->
+                <div class="glass-panel rounded-2xl p-6 relative overflow-hidden group border-t-4 border-t-emerald-500">
+                    <div class="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                        <i data-lucide="pie-chart" class="h-24 w-24 text-emerald-600 transform -rotate-12"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <p class="text-slate-500 text-sm font-semibold mb-1 uppercase tracking-wider">Active Categories</p>
+                        <h3 class="text-3xl font-bold text-slate-900 tracking-tight" id="metric-categories">0</h3>
+                        <div class="mt-4 flex items-center text-xs text-emerald-600 font-bold">
+                            <i data-lucide="activity" class="h-3 w-3 mr-1"></i> Diversified Spending
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Main Columns -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- LEFT COLUMN: Form & Visualizations -->
+                <div class="space-y-8 lg:col-span-1">
+                    
+                    <!-- Expense Entry Form -->
+                    <div class="glass-panel rounded-2xl p-6">
+                        <h3 class="text-lg font-bold text-slate-900 mb-5 flex items-center gap-2">
+                            <i data-lucide="plus-circle" class="h-5 w-5 text-brand-600"></i> Add Expense
+                        </h3>
+                        <form id="expense-form" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 mb-1">Amount ($)</label>
+                                <div class="relative">
+                                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <span class="text-slate-400 font-bold">$</span>
+                                    </div>
+                                    <input type="number" id="exp-amount" required min="0.01" step="0.01" class="glass-input w-full pl-8 pr-3 py-2.5 rounded-lg text-sm font-medium" placeholder="0.00">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 mb-1">Category</label>
+                                <select id="exp-category" required class="glass-input w-full px-3 py-2.5 rounded-lg text-sm font-medium bg-white">
+                                    <option value="" disabled selected>Select Category</option>
+                                    <option value="Food & Dining">Food & Dining</option>
+                                    <option value="Transportation">Transportation</option>
+                                    <option value="Utilities">Utilities</option>
+                                    <option value="Entertainment">Entertainment</option>
+                                    <option value="Shopping">Shopping</option>
+                                    <option value="Healthcare">Healthcare</option>
+                                    <option value="Miscellaneous">Miscellaneous</option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 mb-1">Description</label>
+                                <input type="text" id="exp-desc" required maxlength="50" class="glass-input w-full px-3 py-2.5 rounded-lg text-sm font-medium" placeholder="What was this for?">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 mb-1">Date</label>
+                                <input type="date" id="exp-date" required class="glass-input w-full px-3 py-2.5 rounded-lg text-sm font-medium">
+                            </div>
+
+                            <button type="submit" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-lg transition-colors shadow-md mt-4 flex items-center justify-center gap-2">
+                                <i data-lucide="check" class="h-4 w-4"></i> Save Record
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- CSS Visualizations (Category Breakdown) -->
+                    <div class="glass-panel rounded-2xl p-6">
+                        <h3 class="text-lg font-bold text-slate-900 mb-5 flex items-center gap-2">
+                            <i data-lucide="bar-chart-2" class="h-5 w-5 text-brand-600"></i> Category Breakdown
+                        </h3>
+                        <div id="chart-container" class="space-y-4">
+                            <!-- Bars injected via JS -->
+                            <p class="text-sm text-slate-500 text-center py-4">No data available yet.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN: Transaction Ledger -->
+                <div class="lg:col-span-2">
+                    <div class="glass-panel rounded-2xl p-6 flex flex-col h-full min-h-[600px] shadow-sm">
+                        
+                        <!-- Ledger Header & Search -->
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                            <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                                <i data-lucide="list" class="h-5 w-5 text-brand-600"></i> Transaction Ledger
+                            </h3>
+                            
+                            <div class="relative w-full sm:w-64">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i data-lucide="search" class="h-4 w-4 text-slate-400"></i>
+                                </div>
+                                <input type="text" id="search-filter" class="glass-input w-full pl-9 pr-3 py-2 rounded-full text-sm font-medium bg-slate-50" placeholder="Search transactions...">
+                            </div>
+                        </div>
+
+                        <!-- Table Headers -->
+                        <div class="grid grid-cols-12 gap-4 px-4 py-3 border-b border-slate-200 text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 hidden sm:grid">
+                            <div class="col-span-2">Date</div>
+                            <div class="col-span-4">Description</div>
+                            <div class="col-span-3">Category</div>
+                            <div class="col-span-2 text-right">Amount</div>
+                            <div class="col-span-1 text-right"></div>
+                        </div>
+
+                        <!-- Scrollable Feed -->
+                        <div id="transaction-list" class="flex-1 overflow-y-auto pr-2 space-y-2">
+                            <!-- Items injected via JS -->
+                        </div>
+                        
+                        <!-- Empty State -->
+                        <div id="empty-state" class="hidden flex-col items-center justify-center py-16 opacity-70">
+                            <i data-lucide="inbox" class="h-16 w-16 text-slate-400 mb-4"></i>
+                            <p class="text-slate-600 font-bold">No transactions found.</p>
+                            <p class="text-slate-500 text-sm mt-1 font-medium">Add an expense to get started.</p>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- ==========================================
+         APPLICATION LOGIC (Vanilla JS)
+         ========================================== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Initialize Icons ---
+            lucide.createIcons();
+
+            // --- State Management ---
+            let expenses = JSON.parse(localStorage.getItem('nextrack_expenses_light')) || [];
+            
+            // Generate some sample data if completely empty on first load to look good out-of-the-box
+            if (expenses.length === 0 && !localStorage.getItem('nextrack_initialized_light')) {
+                const today = new Date();
+                expenses = [
+                    { id: '1', amount: 45.20, category: 'Food & Dining', desc: 'Uber Eats - Dinner', date: today.toISOString().split('T')[0] },
+                    { id: '2', amount: 120.00, category: 'Utilities', desc: 'Electric Bill', date: new Date(today.setDate(today.getDate()-2)).toISOString().split('T')[0] },
+                    { id: '3', amount: 14.99, category: 'Entertainment', desc: 'Netflix Subscription', date: new Date(today.setDate(today.getDate()-5)).toISOString().split('T')[0] },
+                    { id: '4', amount: 56.75, category: 'Transportation', desc: 'Gas Station', date: new Date(today.setDate(today.getDate()-1)).toISOString().split('T')[0] },
+                    { id: '5', amount: 210.00, category: 'Shopping', desc: 'Amazon Prime Order', date: new Date(today.setDate(today.getDate()-3)).toISOString().split('T')[0] },
+                ];
+                saveData();
+                localStorage.setItem('nextrack_initialized_light', 'true');
+            }
+
+            // --- DOM Elements ---
+            // Views
+            const authView = document.getElementById('auth-view');
+            const appView = document.getElementById('app-view');
+            // Auth
+            const authForm = document.getElementById('auth-form');
+            const emailInput = document.getElementById('email');
+            const logoutBtn = document.getElementById('logout-btn');
+            const userGreeting = document.getElementById('user-greeting');
+            // Form
+            const expenseForm = document.getElementById('expense-form');
+            const expAmount = document.getElementById('exp-amount');
+            const expCategory = document.getElementById('exp-category');
+            const expDesc = document.getElementById('exp-desc');
+            const expDate = document.getElementById('exp-date');
+            // Ledger
+            const transactionList = document.getElementById('transaction-list');
+            const emptyState = document.getElementById('empty-state');
+            const searchFilter = document.getElementById('search-filter');
+            // Metrics
+            const metricTotal = document.getElementById('metric-total');
+            const metricMonthly = document.getElementById('metric-monthly');
+            const metricCategories = document.getElementById('metric-categories');
+            const chartContainer = document.getElementById('chart-container');
+
+            // Set default date to today
+            expDate.value = new Date().toISOString().split('T')[0];
+
+            // --- Authentication Logic ---
+            // Check if already logged in (simulated session)
+            if (sessionStorage.getItem('nextrack_auth_light') === 'true') {
+                showApp();
+            }
+
+            authForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                if (emailInput.value && document.getElementById('password').value) {
+                    sessionStorage.setItem('nextrack_auth_light', 'true');
+                    sessionStorage.setItem('nextrack_user', emailInput.value.split('@')[0]);
+                    showToast('Welcome back!', 'success');
+                    showApp();
+                }
+            });
+
+            logoutBtn.addEventListener('click', () => {
+                sessionStorage.removeItem('nextrack_auth_light');
+                showToast('Logged out successfully', 'info');
+                authView.classList.remove('hidden');
+                appView.classList.add('hidden');
+            });
+
+            function showApp() {
+                authView.classList.add('hidden');
+                appView.classList.remove('hidden');
+                
+                const username = sessionStorage.getItem('nextrack_user') || 'User';
+                userGreeting.textContent = `Hello, ${username.charAt(0).toUpperCase() + username.slice(1)}`;
+                
+                renderDashboard();
+            }
+
+            // --- CRUD & Rendering Logic ---
+            expenseForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const newExpense = {
+                    id: Date.now().toString(),
+                    amount: parseFloat(expAmount.value),
+                    category: expCategory.value,
+                    desc: expDesc.value.trim(),
+                    date: expDate.value
+                };
+
+                expenses.unshift(newExpense); // Add to top
+                saveData();
+                
+                // Reset form
+                expenseForm.reset();
+                expDate.value = new Date().toISOString().split('T')[0]; // reset date to today
+                
+                showToast('Expense recorded successfully', 'success');
+                renderDashboard();
+            });
+
+            window.deleteExpense = (id) => {
+                expenses = expenses.filter(exp => exp.id !== id);
+                saveData();
+                showToast('Record deleted', 'info');
+                renderDashboard();
+            };
+
+            searchFilter.addEventListener('input', (e) => {
+                renderDashboard(e.target.value.toLowerCase());
+            });
+
+            document.getElementById('export-btn').addEventListener('click', () => {
+                if(expenses.length === 0) return showToast('No data to export', 'error');
+                
+                let csv = 'Date,Category,Description,Amount\n';
+                expenses.forEach(row => {
+                    csv += `${row.date},"${row.category}","${row.desc}",${row.amount}\n`;
+                });
+                
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.setAttribute('href', url);
+                a.setAttribute('download', `nextrack_export_${new Date().toISOString().split('T')[0]}.csv`);
+                a.click();
+                showToast('Export complete', 'success');
+            });
+
+            // --- Core Rendering Engine ---
+            function renderDashboard(filterQuery = '') {
+                // Filter data
+                let displayData = expenses;
+                if (filterQuery) {
+                    displayData = expenses.filter(exp => 
+                        exp.desc.toLowerCase().includes(filterQuery) || 
+                        exp.category.toLowerCase().includes(filterQuery)
+                    );
+                }
+
+                // Render List
+                transactionList.innerHTML = '';
+                if (displayData.length === 0) {
+                    emptyState.classList.remove('hidden');
+                    emptyState.classList.add('flex');
+                } else {
+                    emptyState.classList.add('hidden');
+                    emptyState.classList.remove('flex');
+                    
+                    displayData.forEach(exp => {
+                        const item = document.createElement('div');
+                        item.className = 'group flex flex-col sm:grid sm:grid-cols-12 gap-2 sm:gap-4 p-3 sm:px-4 sm:py-3 bg-white border border-slate-200 hover:border-brand-300 hover:shadow-md rounded-xl transition-all animate-slide-in-right items-start sm:items-center';
+                        
+                        const categoryColors = getCategoryColor(exp.category);
+                        
+                        item.innerHTML = `
+                            <div class="col-span-2 text-xs text-slate-500 font-bold w-full sm:w-auto">
+                                ${formatDate(exp.date)}
+                            </div>
+                            <div class="col-span-4 font-bold text-slate-800 truncate w-full" title="${exp.desc}">
+                                ${exp.desc}
+                            </div>
+                            <div class="col-span-3 w-full sm:w-auto">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold tracking-wide uppercase border ${categoryColors.bg} ${categoryColors.text} ${categoryColors.border}">
+                                    ${exp.category}
+                                </span>
+                            </div>
+                            <div class="col-span-2 text-left sm:text-right font-bold text-rose-600 w-full sm:w-auto">
+                                -$${exp.amount.toFixed(2)}
+                            </div>
+                            <div class="col-span-1 text-right sm:opacity-0 group-hover:opacity-100 transition-opacity absolute top-3 right-3 sm:relative sm:top-0 sm:right-0">
+                                <button onclick="deleteExpense('${exp.id}')" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-md transition-colors" title="Delete">
+                                    <i data-lucide="trash-2" class="h-4 w-4"></i>
+                                </button>
+                            </div>
+                        `;
+                        transactionList.appendChild(item);
+                    });
+                    lucide.createIcons(); // re-init icons for new DOM elements
+                }
+
+                // Calculate & Render Metrics
+                calculateMetrics();
+            }
+
+            function calculateMetrics() {
+                const total = expenses.reduce((sum, exp) => sum + exp.amount, 0);
+                metricTotal.textContent = formatCurrency(total);
+
+                // Monthly calculation
+                const currentMonth = new Date().getMonth();
+                const currentYear = new Date().getFullYear();
+                
+                const monthlyExpenses = expenses.filter(exp => {
+                    const d = new Date(exp.date);
+                    return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
+                });
+                const monthlyTotal = monthlyExpenses.reduce((sum, exp) => sum + exp.amount, 0);
+                metricMonthly.textContent = formatCurrency(monthlyTotal);
+
+                // Category Breakdown
+                const categoryTotals = {};
+                expenses.forEach(exp => {
+                    categoryTotals[exp.category] = (categoryTotals[exp.category] || 0) + exp.amount;
+                });
+                
+                const activeCats = Object.keys(categoryTotals).length;
+                metricCategories.textContent = activeCats;
+
+                // Render Chart
+                renderChart(categoryTotals, total);
+            }
+
+            function renderChart(categoryTotals, grandTotal) {
+                chartContainer.innerHTML = '';
+                
+                if (grandTotal === 0) {
+                    chartContainer.innerHTML = '<p class="text-sm text-slate-500 font-medium text-center py-4">No data available yet.</p>';
+                    return;
+                }
+
+                // Sort by amount descending
+                const sortedCats = Object.entries(categoryTotals).sort((a, b) => b[1] - a[1]);
+
+                sortedCats.forEach(([category, amount]) => {
+                    const percentage = Math.round((amount / grandTotal) * 100);
+                    const colors = getCategoryColor(category);
+                    
+                    const barHtml = `
+                        <div class="mb-3 last:mb-0">
+                            <div class="flex justify-between text-xs mb-1 font-bold">
+                                <span class="text-slate-700">${category}</span>
+                                <span class="text-slate-800">$${amount.toFixed(2)} <span class="text-slate-500 font-medium">(${percentage}%)</span></span>
+                            </div>
+                            <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden shadow-inner">
+                                <div class="h-2 rounded-full ${colors.solidBg} transition-all duration-1000 ease-out" style="width: ${percentage}%"></div>
+                            </div>
+                        </div>
+                    `;
+                    chartContainer.insertAdjacentHTML('beforeend', barHtml);
+                });
+            }
+
+            // --- Utilities ---
+            function saveData() {
+                localStorage.setItem('nextrack_expenses_light', JSON.stringify(expenses));
+            }
+
+            function formatCurrency(num) {
+                return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(num);
+            }
+
+            function formatDate(dateStr) {
+                const opts = { month: 'short', day: 'numeric', year: 'numeric' };
+                return new Date(dateStr).toLocaleDateString('en-US', opts);
+            }
+
+            function showToast(message, type = 'info') {
+                const container = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                
+                const colors = {
+                    success: 'bg-emerald-50 border-emerald-200 text-emerald-700',
+                    error: 'bg-rose-50 border-rose-200 text-rose-700',
+                    info: 'bg-brand-50 border-brand-200 text-brand-700'
+                };
+                
+                const icons = {
+                    success: 'check-circle',
+                    error: 'alert-circle',
+                    info: 'info'
+                };
+
+                toast.className = `flex items-center gap-2 px-4 py-3 rounded-lg border shadow-lg animate-slide-in-right ${colors[type]}`;
+                toast.innerHTML = `<i data-lucide="${icons[type]}" class="h-4 w-4"></i> <span class="text-sm font-bold">${message}</span>`;
+                
+                container.appendChild(toast);
+                lucide.createIcons();
+                
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                    toast.style.transform = 'translateX(20px)';
+                    toast.style.transition = 'all 0.3s ease';
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }
+
+            function getCategoryColor(category) {
+                const map = {
+                    'Food & Dining': { bg: 'bg-orange-50', text: 'text-orange-700', border: 'border-orange-200', solidBg: 'bg-orange-500' },
+                    'Transportation': { bg: 'bg-sky-50', text: 'text-sky-700', border: 'border-sky-200', solidBg: 'bg-sky-500' },
+                    'Utilities': { bg: 'bg-yellow-50', text: 'text-yellow-700', border: 'border-yellow-200', solidBg: 'bg-yellow-500' },
+                    'Entertainment': { bg: 'bg-purple-50', text: 'text-purple-700', border: 'border-purple-200', solidBg: 'bg-purple-500' },
+                    'Shopping': { bg: 'bg-pink-50', text: 'text-pink-700', border: 'border-pink-200', solidBg: 'bg-pink-500' },
+                    'Healthcare': { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200', solidBg: 'bg-emerald-500' },
+                    'Miscellaneous': { bg: 'bg-slate-50', text: 'text-slate-700', border: 'border-slate-200', solidBg: 'bg-slate-500' }
+                };
+                return map[category] || map['Miscellaneous'];
+            }
+        });
+    </script>
+</body>
+</html>
