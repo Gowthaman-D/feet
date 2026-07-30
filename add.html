@@ -9,7 +9,7 @@
   <!-- Makes the web page responsive, adapting its layout to the width of the device screen (like mobile phones). -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- The title of the page, which appears in the browser tab. -->
-  <title>Add Transaction - Smart Expense Tracker</title>
+  <title>Add Transaction - RATIO</title>
   
   <!-- Font Awesome Icons via CDN -->
   <!-- This link tag imports external CSS from Font Awesome, giving us access to hundreds of free icons. -->
@@ -34,7 +34,7 @@
           <i class="fa-solid fa-vault"></i>
         </div>
         <!-- The brand name text. It includes a smaller nested element for the subtitle. -->
-        <span>SmartVault <small style="font-size: 0.65em; font-weight: 500; color: var(--primary-light); display: block; margin-top: -4px;">FINANCIAL TRACKER</small></span>
+        <span>RATIO <small style="font-size: 0.65em; font-weight: 500; color: var(--primary-light); display: block; margin-top: -4px;">FINANCIAL TRACKER</small></span>
       </a>
 
       <!-- An unordered list (ul) used to group the navigation links. -->
@@ -100,6 +100,11 @@
         
         <!-- The form element collects user input. On submission, it sends data to dashboard.html via the GET method. -->
         <form action="dashboard.html" method="get">
+          
+          <!-- AI Camera Scan Button (UI only) -->
+          <button type="button" class="btn btn-secondary" style="width: 100%; margin-bottom: 24px; display: flex; justify-content: center; align-items: center; gap: 8px; font-weight: 600; border-color: var(--primary-blue); color: var(--primary-blue); background-color: var(--primary-soft);" onclick="alert('AI Auto-Entry Scanner is a mock button for now!')">
+            <i class="fa-solid fa-camera"></i> Scan Bill (AI Auto-Entry)
+          </button>
           
           <!-- Type Selection: Income vs Expense -->
           <!-- A group for the radio buttons to select transaction type. -->
@@ -218,17 +223,15 @@
           <!-- Description Input -->
           <div class="form-group">
             <label for="description" class="form-label">
-              Description & Notes <span class="required">*</span>
+              Description & Notes <span style="font-size: 0.8rem; font-weight: normal; color: var(--text-muted);">(Optional)</span>
             </label>
-            <!-- Text input field for short descriptions. 'minlength="3"' requires at least 3 characters. -->
+            <!-- Text input field for short descriptions. -->
             <input 
               type="text" 
               id="description" 
               name="description" 
               class="form-control" 
-              placeholder="e.g. Whole Foods Market - Weekly Grocery Supplies" 
-              required 
-              minlength="3"
+              placeholder="e.g. Whole Foods Market - Weekly Grocery Supplies"
             >
             <span class="form-helper-text">Provide a concise summary of the transaction for your history audit.</span>
           </div>
@@ -260,7 +263,7 @@
     <div class="app-container">
       <div class="footer-content">
         <!-- Copyright text -->
-        <p>&copy; 2026 Smart Expense Tracker. Static HTML5 & CSS3 Architecture.</p>
+        <p>&copy; 2026 RATIO. Static HTML5 & CSS3 Architecture.</p>
         <!-- Footer navigation links -->
         <div class="footer-links">
           <a href="dashboard.html">Privacy Policy</a>

@@ -1,6 +1,6 @@
-# feet - Smart Expense Tracker
+# RATIO - Financial Tracker
 
-A complete frontend-only **Smart Expense Tracker** web application built exclusively with **HTML5** and **CSS3**.
+A complete frontend-only **RATIO** web application built exclusively with **HTML5** and **CSS3**.
 
 ## Requirements Met
 - **Zero JavaScript**: Built with 100% pure HTML5 and vanilla CSS3.
